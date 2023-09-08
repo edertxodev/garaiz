@@ -1,0 +1,15 @@
+{
+  "links": {
+    "chat": "Chat",
+    "home": "Inicio"
+  },
+  "login": {
+    "headers": {
+      "join": "Únete a {{name}}"
+    },
+    "texts": {
+      "signIn": "Iniciar sesión con {{name}}",
+      "spam": "Inicia sesión con tu plataforma preferida y disfruta de todas las ventajas que ofrece {{name}}"
+    }
+  }
+}

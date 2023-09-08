@@ -1,0 +1,5 @@
+mutation UpdateUser($id: ID!, $data: UsersPermissionsUserInput!) {
+  updateUsersPermissionsUser(id: $id, data: $data) {
+    ...UserProps
+  }
+}

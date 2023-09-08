@@ -1,0 +1,13 @@
+fragment UserProps on UsersPermissionsUserEntityResponse {
+  data {
+    id
+    attributes {
+      username
+      email
+      name
+      lastname
+      birthdate
+      gender
+    }
+  }
+}

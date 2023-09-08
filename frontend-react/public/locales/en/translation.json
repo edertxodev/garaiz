@@ -1,0 +1,15 @@
+{
+  "links": {
+    "chat": "Chat",
+    "home": "Home"
+  },
+  "login": {
+    "headers": {
+      "join": "Join {{name}}"
+    },
+    "texts": {
+      "signIn": "Sign in with {{name}}",
+      "spam": "Sign in with your preferred platform and enjoy all the advantages that {{name}} offers"
+    }
+  }
+}
