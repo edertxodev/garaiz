@@ -81,6 +81,15 @@
     },
     "lastname": {
       "type": "string"
+    },
+    "avatar_url": {
+      "type": "string"
+    },
+    "conversation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::conversation.conversation",
+      "inversedBy": "users"
     }
   }
 }

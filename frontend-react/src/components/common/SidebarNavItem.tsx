@@ -15,9 +15,9 @@ const SidebarNavItem: FC<SidebarNavItemProps> = ({ icon, path, children, onClose
 
   const styles = {
     navItem: {
-      bg: useColorModeValue('pink.600', 'gray.900'),
+      bg: useColorModeValue('pink.600', 'gray.700'),
       hover: {
-        bg: useColorModeValue('pink.400', 'gray.700'),
+        bg: useColorModeValue('pink.500', 'gray.600'),
       },
     },
   }

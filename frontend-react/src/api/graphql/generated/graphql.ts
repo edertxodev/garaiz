@@ -1,5 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { RequestInit } from 'graphql-request/dist/types.dom';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -50,6 +51,61 @@ export type BooleanFilterInput = {
   null?: InputMaybe<Scalars['Boolean']['input']>;
   or?: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
   startsWith?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Conversation = {
+  __typename?: 'Conversation';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  messages?: Maybe<MessageRelationResponseCollection>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  users?: Maybe<UsersPermissionsUserRelationResponseCollection>;
+};
+
+
+export type ConversationMessagesArgs = {
+  filters?: InputMaybe<MessageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type ConversationUsersArgs = {
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ConversationEntity = {
+  __typename?: 'ConversationEntity';
+  attributes?: Maybe<Conversation>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ConversationEntityResponse = {
+  __typename?: 'ConversationEntityResponse';
+  data?: Maybe<ConversationEntity>;
+};
+
+export type ConversationEntityResponseCollection = {
+  __typename?: 'ConversationEntityResponseCollection';
+  data: Array<ConversationEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ConversationFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ConversationFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  messages?: InputMaybe<MessageFiltersInput>;
+  not?: InputMaybe<ConversationFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ConversationFiltersInput>>>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  users?: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type ConversationInput = {
+  messages?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  users?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type DateFilterInput = {
@@ -136,7 +192,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = I18NLocale | Note | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Conversation | I18NLocale | Message | Note | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -246,10 +302,64 @@ export type JsonFilterInput = {
   startsWith?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  content: Scalars['String']['output'];
+  conversation?: Maybe<ConversationEntityResponse>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  timestamp: Scalars['DateTime']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user?: Maybe<UsersPermissionsUserEntityResponse>;
+};
+
+export type MessageEntity = {
+  __typename?: 'MessageEntity';
+  attributes?: Maybe<Message>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type MessageEntityResponse = {
+  __typename?: 'MessageEntityResponse';
+  data?: Maybe<MessageEntity>;
+};
+
+export type MessageEntityResponseCollection = {
+  __typename?: 'MessageEntityResponseCollection';
+  data: Array<MessageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type MessageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<MessageFiltersInput>>>;
+  content?: InputMaybe<StringFilterInput>;
+  conversation?: InputMaybe<ConversationFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<MessageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<MessageFiltersInput>>>;
+  timestamp?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  user?: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type MessageInput = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  conversation?: InputMaybe<Scalars['ID']['input']>;
+  timestamp?: InputMaybe<Scalars['DateTime']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type MessageRelationResponseCollection = {
+  __typename?: 'MessageRelationResponseCollection';
+  data: Array<MessageEntity>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
+  createConversation?: Maybe<ConversationEntityResponse>;
+  createMessage?: Maybe<MessageEntityResponse>;
   createNote?: Maybe<NoteEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -257,6 +367,8 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteConversation?: Maybe<ConversationEntityResponse>;
+  deleteMessage?: Maybe<MessageEntityResponse>;
   deleteNote?: Maybe<NoteEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -275,7 +387,9 @@ export type Mutation = {
   removeFile?: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  updateConversation?: Maybe<ConversationEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateMessage?: Maybe<MessageEntityResponse>;
   updateNote?: Maybe<NoteEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -291,6 +405,16 @@ export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
+};
+
+
+export type MutationCreateConversationArgs = {
+  data: ConversationInput;
+};
+
+
+export type MutationCreateMessageArgs = {
+  data: MessageInput;
 };
 
 
@@ -316,6 +440,16 @@ export type MutationCreateUsersPermissionsRoleArgs = {
 
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
+};
+
+
+export type MutationDeleteConversationArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteMessageArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -384,9 +518,21 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationUpdateConversationArgs = {
+  data: ConversationInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
+};
+
+
+export type MutationUpdateMessageArgs = {
+  data: MessageInput;
+  id: Scalars['ID']['input'];
 };
 
 
@@ -489,9 +635,13 @@ export type PaginationArg = {
 
 export type Query = {
   __typename?: 'Query';
+  conversation?: Maybe<ConversationEntityResponse>;
+  conversations?: Maybe<ConversationEntityResponseCollection>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  message?: Maybe<MessageEntityResponse>;
+  messages?: Maybe<MessageEntityResponseCollection>;
   note?: Maybe<NoteEntityResponse>;
   notes?: Maybe<NoteEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
@@ -505,6 +655,18 @@ export type Query = {
 };
 
 
+export type QueryConversationArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryConversationsArgs = {
+  filters?: InputMaybe<ConversationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
 export type QueryI18NLocaleArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -512,6 +674,18 @@ export type QueryI18NLocaleArgs = {
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryMessageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryMessagesArgs = {
+  filters?: InputMaybe<MessageFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -916,9 +1090,11 @@ export type UsersPermissionsUpdateRolePayload = {
 
 export type UsersPermissionsUser = {
   __typename?: 'UsersPermissionsUser';
+  avatar_url?: Maybe<Scalars['String']['output']>;
   birthdate?: Maybe<Scalars['Date']['output']>;
   blocked?: Maybe<Scalars['Boolean']['output']>;
   confirmed?: Maybe<Scalars['Boolean']['output']>;
+  conversation?: Maybe<ConversationEntityResponse>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
   gender?: Maybe<Enum_Userspermissionsuser_Gender>;
@@ -949,10 +1125,12 @@ export type UsersPermissionsUserEntityResponseCollection = {
 
 export type UsersPermissionsUserFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  avatar_url?: InputMaybe<StringFilterInput>;
   birthdate?: InputMaybe<DateFilterInput>;
   blocked?: InputMaybe<BooleanFilterInput>;
   confirmationToken?: InputMaybe<StringFilterInput>;
   confirmed?: InputMaybe<BooleanFilterInput>;
+  conversation?: InputMaybe<ConversationFiltersInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   email?: InputMaybe<StringFilterInput>;
   gender?: InputMaybe<StringFilterInput>;
@@ -970,10 +1148,12 @@ export type UsersPermissionsUserFiltersInput = {
 };
 
 export type UsersPermissionsUserInput = {
+  avatar_url?: InputMaybe<Scalars['String']['input']>;
   birthdate?: InputMaybe<Scalars['Date']['input']>;
   blocked?: InputMaybe<Scalars['Boolean']['input']>;
   confirmationToken?: InputMaybe<Scalars['String']['input']>;
   confirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  conversation?: InputMaybe<Scalars['ID']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   gender?: InputMaybe<Enum_Userspermissionsuser_Gender>;
   lastname?: InputMaybe<Scalars['String']['input']>;
@@ -990,7 +1170,25 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null, messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null }> };
+
 export type UserPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null };
+
+export type UsersPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null }> };
+
+export type CreateConversationMutationVariables = Exact<{
+  data: ConversationInput;
+}>;
+
+
+export type CreateConversationMutation = { __typename?: 'Mutation', createConversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null } | null } | null };
+
+export type CreateMessageMutationVariables = Exact<{
+  data: MessageInput;
+}>;
+
+
+export type CreateMessageMutation = { __typename?: 'Mutation', createMessage?: { __typename?: 'MessageEntityResponse', data?: { __typename?: 'MessageEntity', id?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -999,6 +1197,29 @@ export type UpdateUserMutationVariables = Exact<{
 
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } };
+
+export type GetConversationQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+}>;
+
+
+export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
+
+export type GetConversationsQueryVariables = Exact<{
+  filters?: InputMaybe<ConversationFiltersInput>;
+}>;
+
+
+export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null, messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null }> } | null };
+
+export type GetUsersQueryVariables = Exact<{
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
+}>;
+
+
+export type GetUsersQuery = { __typename?: 'Query', usersPermissionsUsers?: { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null }> } | null };
 
 export const UserPropsFragmentDoc = `
     fragment UserProps on UsersPermissionsUserEntityResponse {
@@ -1015,6 +1236,97 @@ export const UserPropsFragmentDoc = `
   }
 }
     `;
+export const ConversationsPropsFragmentDoc = `
+    fragment ConversationsProps on ConversationEntityResponseCollection {
+  data {
+    id
+    attributes {
+      users {
+        data {
+          id
+          attributes {
+            username
+            name
+            lastname
+            avatar_url
+          }
+        }
+      }
+      messages {
+        data {
+          id
+          attributes {
+            content
+            timestamp
+            user {
+              ...UserProps
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${UserPropsFragmentDoc}`;
+export const UsersPropsFragmentDoc = `
+    fragment UsersProps on UsersPermissionsUserEntityResponseCollection {
+  data {
+    id
+    attributes {
+      username
+      email
+      name
+      lastname
+      birthdate
+      gender
+    }
+  }
+}
+    `;
+export const CreateConversationDocument = `
+    mutation CreateConversation($data: ConversationInput!) {
+  createConversation(data: $data) {
+    data {
+      id
+    }
+  }
+}
+    `;
+export const useCreateConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateConversationMutation, TError, CreateConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateConversationMutation, TError, CreateConversationMutationVariables, TContext>(
+      ['CreateConversation'],
+      (variables?: CreateConversationMutationVariables) => fetcher<CreateConversationMutation, CreateConversationMutationVariables>(client, CreateConversationDocument, variables, headers)(),
+      options
+    );
+export const CreateMessageDocument = `
+    mutation CreateMessage($data: MessageInput!) {
+  createMessage(data: $data) {
+    data {
+      id
+    }
+  }
+}
+    `;
+export const useCreateMessageMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateMessageMutation, TError, CreateMessageMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateMessageMutation, TError, CreateMessageMutationVariables, TContext>(
+      ['CreateMessage'],
+      (variables?: CreateMessageMutationVariables) => fetcher<CreateMessageMutation, CreateMessageMutationVariables>(client, CreateMessageDocument, variables, headers)(),
+      options
+    );
 export const UpdateUserDocument = `
     mutation UpdateUser($id: ID!, $data: UsersPermissionsUserInput!) {
   updateUsersPermissionsUser(id: $id, data: $data) {
@@ -1033,5 +1345,84 @@ export const useUpdateUserMutation = <
     useMutation<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>(
       ['UpdateUser'],
       (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(client, UpdateUserDocument, variables, headers)(),
+      options
+    );
+export const GetConversationDocument = `
+    query GetConversation($id: ID, $pagination: PaginationArg, $sort: [String]) {
+  conversation(id: $id) {
+    data {
+      id
+      attributes {
+        messages(pagination: $pagination, sort: $sort) {
+          data {
+            id
+            attributes {
+              content
+              timestamp
+              user {
+                ...UserProps
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${UserPropsFragmentDoc}`;
+export const useGetConversationQuery = <
+      TData = GetConversationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetConversationQueryVariables,
+      options?: UseQueryOptions<GetConversationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetConversationQuery, TError, TData>(
+      variables === undefined ? ['GetConversation'] : ['GetConversation', variables],
+      fetcher<GetConversationQuery, GetConversationQueryVariables>(client, GetConversationDocument, variables, headers),
+      options
+    );
+export const GetConversationsDocument = `
+    query GetConversations($filters: ConversationFiltersInput) {
+  conversations(filters: $filters) {
+    ...ConversationsProps
+  }
+}
+    ${ConversationsPropsFragmentDoc}`;
+export const useGetConversationsQuery = <
+      TData = GetConversationsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetConversationsQueryVariables,
+      options?: UseQueryOptions<GetConversationsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetConversationsQuery, TError, TData>(
+      variables === undefined ? ['GetConversations'] : ['GetConversations', variables],
+      fetcher<GetConversationsQuery, GetConversationsQueryVariables>(client, GetConversationsDocument, variables, headers),
+      options
+    );
+export const GetUsersDocument = `
+    query GetUsers($filters: UsersPermissionsUserFiltersInput) {
+  usersPermissionsUsers(filters: $filters) {
+    ...UsersProps
+  }
+}
+    ${UsersPropsFragmentDoc}`;
+export const useGetUsersQuery = <
+      TData = GetUsersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUsersQueryVariables,
+      options?: UseQueryOptions<GetUsersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetUsersQuery, TError, TData>(
+      variables === undefined ? ['GetUsers'] : ['GetUsers', variables],
+      fetcher<GetUsersQuery, GetUsersQueryVariables>(client, GetUsersDocument, variables, headers),
       options
     );

@@ -11,10 +11,12 @@ import { useTranslation } from 'react-i18next'
 import BlurColors from 'components/common/styled/BlurColors'
 import GithubIcon from 'components/icons/GithubIcon'
 import axios from 'axios'
+import useUpdateUser from 'api/graphql/hooks/User/useUpdateUser'
 
 const Login: FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { mutateAsync: updateUser } = useUpdateUser()
   const auth = useAuth()
   const appName = import.meta.env.VITE_APP_NAME
 
@@ -41,16 +43,18 @@ const Login: FC = () => {
               headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
             })
             .then((googleProfileResponse) => {
-              const user = backendResponse.data.user as User
-              user.avatar = googleProfileResponse.data.picture
+              const user = { ...backendResponse.data.user } as User
+              user.avatar = backendResponse.data.user?.avatar_url ?? googleProfileResponse.data.picture
               user.name = googleProfileResponse.data.given_name
               user.lastname = googleProfileResponse.data.family_name
+              if (user.id && !backendResponse.data.user.avatar_url)
+                updateUser({ id: user.id, data: { avatar_url: user.avatar } })
               setAuthUser(user)
               navigate(getRoutePathByName('home'))
             })
         })
     },
-    [navigate, setAuthUser]
+    [navigate, setAuthUser, updateUser]
   )
 
   const googleLogin = useGoogleLogin({

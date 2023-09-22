@@ -17,7 +17,8 @@ const Loadable = (Component: any) => (props: Attributes) =>
 
 const Home = Loadable(lazy(() => import('pages/Home')))
 const Login = Loadable(lazy(() => import('pages/Login')))
-const Chat = Loadable(lazy(() => import('pages/Chat')))
+const ChatList = Loadable(lazy(() => import('pages/ChatList')))
+const ChatDetail = Loadable(lazy(() => import('pages/ChatDetail')))
 
 const AppRoutes: AppRouteObject[] = [
   { path: '/', element: <Home />, name: 'home' },
@@ -34,10 +35,19 @@ const AppRoutes: AppRouteObject[] = [
     path: '/chat',
     element: (
       <AuthRoute>
-        <Chat />
+        <ChatList />
       </AuthRoute>
     ),
-    name: 'chat',
+    name: 'chatList',
+  },
+  {
+    path: '/chat/:conversationId',
+    element: (
+      <AuthRoute>
+        <ChatDetail />
+      </AuthRoute>
+    ),
+    name: 'chatDetail',
   },
   { path: '*', element: <Navigate to="/" />, name: 'default' },
 ]

@@ -1,0 +1,5 @@
+query GetUsers($filters: UsersPermissionsUserFiltersInput) {
+  usersPermissionsUsers(filters: $filters) {
+    ...UsersProps
+  }
+}

@@ -12,7 +12,7 @@ const MainLayout: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Box>
       {auth?.user ? <Sidebar onClose={onClose} display={{ base: 'none', md: 'block' }} /> : null}
       <Drawer
         isOpen={isOpen}
@@ -27,7 +27,12 @@ const MainLayout: FC = () => {
         </DrawerContent>
       </Drawer>
       <Header onOpen={onOpen} />
-      <Box ml={{ base: 0, md: auth?.user ? 72 : 0 }} p={4}>
+      <Box
+        ml={{ base: 0, md: auth?.user ? 72 : 0 }}
+        pt={16}
+        minHeight="100vh"
+        bg={useColorModeValue('gray.50', 'gray.800')}
+      >
         {content}
       </Box>
     </Box>

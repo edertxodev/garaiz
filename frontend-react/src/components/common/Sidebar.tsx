@@ -12,14 +12,15 @@ interface SidebarProps extends BoxProps {
 const Sidebar: FC<SidebarProps> = ({ onClose, ...props }) => {
   const linkItems = [
     { name: t('links.home'), icon: faHome, path: getRoutePathByName('home') },
-    { name: t('links.chat'), icon: faComments, path: getRoutePathByName('chat') },
+    { name: t('links.chat'), icon: faComments, path: getRoutePathByName('chatList') },
   ]
+
   return (
     <Box
       transition="3s ease"
       bg={useColorModeValue('pink.700', 'gray.800')}
       borderRight="1px"
-      borderRightColor={useColorModeValue('pink.200', 'gray.700')}
+      borderRightColor={useColorModeValue('pink.600', 'gray.700')}
       w={{ base: 'full', md: 72 }}
       position="fixed"
       h="full"

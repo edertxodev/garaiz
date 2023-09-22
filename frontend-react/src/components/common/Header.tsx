@@ -20,7 +20,15 @@ import { FC, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { faBars, faBell, faChevronDown, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowRightFromBracket,
+  faBars,
+  faBell,
+  faChevronDown,
+  faMoon,
+  faSun,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons'
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { useAuth } from 'lib/auth/AuthContext'
 
@@ -37,6 +45,9 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
     menuList: {
       bg: useColorModeValue('white', 'gray.700'),
       borderColor: useColorModeValue('white', 'gray.700'),
+      divider: {
+        borderColor: useColorModeValue('gray.100', 'gray.600'),
+      },
     },
   }
 
@@ -48,7 +59,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   }, [auth, navigate])
 
   return (
-    <Box bg={useColorModeValue('gray.50', 'gray.800')} position="fixed" px={4} w="100%" zIndex={1}>
+    <Box bg={useColorModeValue('gray.50', 'gray.800')} position="fixed" w="100%" zIndex={1}>
       <Flex
         color={useColorModeValue('gray.600', 'white')}
         h={16}
@@ -57,6 +68,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
         borderColor={useColorModeValue('gray.200', 'gray.700')}
         alignItems="center"
         justifyContent="space-between"
+        px={4}
       >
         <IconButton
           display={{ base: 'flex', md: 'none' }}
@@ -97,7 +109,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                     <HStack>
                       <Avatar size={'sm'} src={auth.user.avatar} />
                       <VStack display={{ base: 'none', md: 'flex' }} alignItems="flex-start" spacing="1px" ml="2">
-                        <Text fontSize="sm">
+                        <Text fontSize="sm" fontWeight="bold">
                           {auth.user.name} {auth.user.lastname}
                         </Text>
                       </VStack>
@@ -106,10 +118,16 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                       </Box>
                     </HStack>
                   </MenuButton>
-                  <MenuList bg={styles.menuList.bg} borderColor={styles.menuList.borderColor}>
-                    <MenuItem>Profile</MenuItem>
-                    <MenuDivider />
-                    <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+                  <MenuList bg={styles.menuList.bg} borderColor={styles.menuList.borderColor} p={0}>
+                    <MenuItem py={4} gap={4}>
+                      <FontAwesomeIcon icon={faUser} />
+                      Profile
+                    </MenuItem>
+                    <MenuDivider borderColor={styles.menuList.divider.borderColor} my={0} />
+                    <MenuItem py={4} gap={4} onClick={handleLogout}>
+                      <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                      Sign out
+                    </MenuItem>
                   </MenuList>
                 </Menu>
               </Flex>

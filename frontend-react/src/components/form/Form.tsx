@@ -53,6 +53,12 @@ const Form: FC<FormProps> = ({
   }
 
   useEffect(() => {
+    if (form.formState.isSubmitted && resetOnSubmit) {
+      form.reset()
+    }
+  }, [form, form.formState.isSubmitted, resetOnSubmit])
+
+  useEffect(() => {
     window.addEventListener('keydown', keyDownHandler, false)
 
     return () => window.removeEventListener('keydown', keyDownHandler, false)
