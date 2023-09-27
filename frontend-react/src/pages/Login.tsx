@@ -63,7 +63,7 @@ const Login: FC = () => {
 
   return (
     <>
-      <Flex minH="95vh" align="center" justify="center">
+      <Flex alignItems="center" justifyContent="center" width="100%">
         <Box
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'xl'}

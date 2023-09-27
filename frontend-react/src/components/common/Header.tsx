@@ -41,15 +41,9 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   const navigate = useNavigate()
   const auth = useAuth()
 
-  const styles = {
-    menuList: {
-      bg: useColorModeValue('white', 'gray.700'),
-      borderColor: useColorModeValue('white', 'gray.700'),
-      divider: {
-        borderColor: useColorModeValue('gray.100', 'gray.600'),
-      },
-    },
-  }
+  const menuListBg = useColorModeValue('white', 'gray.700')
+  const menuListBorderColor = useColorModeValue('white', 'gray.700')
+  const menuListDividerBorderColor = useColorModeValue('gray.100', 'gray.600')
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.token)
@@ -118,12 +112,12 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                       </Box>
                     </HStack>
                   </MenuButton>
-                  <MenuList bg={styles.menuList.bg} borderColor={styles.menuList.borderColor} p={0}>
+                  <MenuList bg={menuListBg} borderColor={menuListBorderColor} p={0}>
                     <MenuItem py={4} gap={4}>
                       <FontAwesomeIcon icon={faUser} />
                       Profile
                     </MenuItem>
-                    <MenuDivider borderColor={styles.menuList.divider.borderColor} my={0} />
+                    <MenuDivider borderColor={menuListDividerBorderColor} my={0} />
                     <MenuItem py={4} gap={4} onClick={handleLogout}>
                       <FontAwesomeIcon icon={faArrowRightFromBracket} />
                       Sign out

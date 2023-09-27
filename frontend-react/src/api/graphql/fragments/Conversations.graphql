@@ -10,18 +10,7 @@ fragment ConversationsProps on ConversationEntityResponseCollection {
             name
             lastname
             avatar_url
-          }
-        }
-      }
-      messages {
-        data {
-          id
-          attributes {
-            content
-            timestamp
-            user {
-              ...UserProps
-            }
+            email
           }
         }
       }

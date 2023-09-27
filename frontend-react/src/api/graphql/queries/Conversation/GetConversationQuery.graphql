@@ -1,17 +1,17 @@
-query GetConversation($id: ID, $pagination: PaginationArg, $sort: [String]) {
+query GetConversation($id: ID) {
   conversation(id: $id) {
     data {
       id
       attributes {
-        messages(pagination: $pagination, sort: $sort) {
+        users {
           data {
             id
             attributes {
-              content
-              timestamp
-              user {
-                ...UserProps
-              }
+              username
+              email
+              name
+              lastname
+              avatar_url
             }
           }
         }

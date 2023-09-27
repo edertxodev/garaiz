@@ -29,7 +29,7 @@ const Sidebar: FC<SidebarProps> = ({ onClose, ...props }) => {
     >
       <Flex h={20} alignItems="center" mx={8} justifyContent="space-between">
         <Heading color="white">{import.meta.env.VITE_APP_NAME}</Heading>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} color="white" />
       </Flex>
       {linkItems.map((link) => (
         <SidebarNavItem key={link.name} icon={link.icon} path={link.path} onClose={onClose}>

@@ -1,4 +1,5 @@
-import { Box, Text, VStack } from '@chakra-ui/react'
+import { Avatar, Button, Divider, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { DEFAULT_PAGE_SIZE } from 'lib/constants'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Maybe, UsersPermissionsUser } from 'api/graphql/generated/graphql'
 import {
@@ -8,18 +9,18 @@ import {
   sendMessage,
   subscribeToChat,
 } from 'lib/services/SocketIO'
-import { resolveMessageDateAndTime } from 'lib/resolvers/chatResolvers'
 import { resolveUserCompleteName } from 'lib/resolvers/userResolvers'
 import { useAuth } from 'lib/auth/AuthContext'
 import { useParams } from 'react-router-dom'
 import ChatForm from 'components/chat/ChatForm'
+import ChatMessage from 'components/chat/ChatMessage'
 import Form from 'components/form/Form'
+import Loader from 'components/common/styled/Loader'
 import moment from 'moment'
 import useConversation from 'api/graphql/hooks/Conversation/useConversation'
 import useCreateMessage from 'api/graphql/hooks/Message/useCreateMessage'
+import useMessages from 'api/graphql/hooks/Message/useMessages'
 import useScroll from 'lib/hooks/useScroll'
-
-const MESSAGES_PAGE_SIZE = 20
 
 const ChatView: FC = () => {
   const auth = useAuth()
@@ -27,13 +28,29 @@ const ChatView: FC = () => {
   const { conversationId } = useParams()
   const [messages, setMessages] = useState<Message[]>([])
   const [page, setPage] = useState<number>(1)
+  const [otherUser, setOtherUser] = useState<UsersPermissionsUser>()
+  const { scrollY } = useScroll()
+  const { data: conversation } = useConversation(conversationId)
   const {
-    data: conversation,
-    refetch: refetchConversation,
-    status: conversationStatus,
-  } = useConversation(conversationId, { pageSize: MESSAGES_PAGE_SIZE, page }, ['id:desc'], false)
+    data: messagesResponse,
+    refetch: refetchMessages,
+    status: messagesStatus,
+    pagination: messagesPagination,
+  } = useMessages({ conversation: { id: { eq: conversationId } } }, { pageSize: DEFAULT_PAGE_SIZE, page }, ['id:desc'])
   const { mutateAsync: createMessage } = useCreateMessage()
-  const { scrollDirection, scrollY } = useScroll()
+
+  const loadMoreButtonBg = useColorModeValue('gray.50', 'gray.800')
+  const loadMoreButtonHoverBg = useColorModeValue('gray.100', 'gray.700')
+
+  const sortMessages = useCallback((messages: Message[]) => {
+    return messages.sort((a, b) => {
+      if (!a.timestamp || !b.timestamp) return 0
+      if (a.timestamp === b.timestamp) return 0
+      else if (a.timestamp > b.timestamp) return 1
+
+      return -1
+    })
+  }, [])
 
   useEffect(() => {
     if (auth?.user?.username) initiateSocketConnection(auth?.user?.username)
@@ -44,18 +61,18 @@ const ChatView: FC = () => {
 
   useEffect(() => {
     const storedMessages: Message[] = [...messages]
-    conversation?.attributes?.messages?.data.forEach((message) => {
+    messagesResponse?.forEach((message) => {
       storedMessages.push({
-        conversationId: message.attributes?.conversation?.data?.id?.toString(),
+        conversationId: conversationId,
         userId: message.attributes?.user?.data?.id?.toString(),
         userCompleteName: resolveUserCompleteName(auth?.user as Maybe<UsersPermissionsUser>),
         timestamp: message.attributes?.timestamp,
         content: message.attributes?.content,
       })
     })
-    setMessages(storedMessages.reverse())
+    setMessages(sortMessages(storedMessages))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth?.user, conversation?.attributes?.messages?.data])
+  }, [auth?.user, messagesResponse])
 
   useEffect(() => {
     if (conversationId) {
@@ -68,28 +85,23 @@ const ChatView: FC = () => {
 
   // Always scroll to bottom on new messages
   useEffect(() => {
-    if (messages.length) {
+    if (messages.length && scrollY === 0) {
       ref.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.length])
 
-  // Load more messages on scroll top
+  // Refetch messages on page changes
   useEffect(() => {
-    if (
-      scrollDirection === 'up' &&
-      scrollY <= MESSAGES_PAGE_SIZE &&
-      conversationStatus !== 'loading' &&
-      conversation?.attributes?.messages?.data.length === MESSAGES_PAGE_SIZE
-    ) {
-      setPage(page + 1)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollDirection, scrollY])
-
-  useEffect(() => {
-    refetchConversation()
+    refetchMessages()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
+
+  // Set other user
+  useEffect(() => {
+    const otherUser = conversation?.attributes?.users?.data.find((el) => Number(el.id) !== Number(auth?.user?.id))
+    if (otherUser?.attributes) setOtherUser(otherUser?.attributes)
+  }, [auth?.user?.id, conversation])
 
   const handleMessageSend = useCallback(
     (data: any) => {
@@ -108,40 +120,60 @@ const ChatView: FC = () => {
   )
 
   return (
-    <>
-      <Box p={4}>
+    <Flex direction="column" width="100%">
+      <Flex width="100%" bg={useColorModeValue('pink.400', 'gray.600')}>
+        <HStack gap={4} px={4} py={2}>
+          <Avatar
+            size="lg"
+            name={resolveUserCompleteName(otherUser)}
+            src={otherUser?.avatar_url ?? undefined}
+            bg={useColorModeValue('pink.200', 'gray.400')}
+          />
+          <Text fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
+            {resolveUserCompleteName(otherUser)}
+          </Text>
+        </HStack>
+      </Flex>
+      <Flex p={4} width="100%" overflowY="auto" direction="column" minHeight={{ base: '75%', xl: '81%' }}>
+        {messagesStatus === 'loading' ? <Loader /> : null}
+        {messagesStatus !== 'loading' && messagesPagination?.pageCount && page < messagesPagination?.pageCount ? (
+          <Flex justifyContent="center" mt={4} mb={8} position="relative">
+            <Divider />
+            <Button
+              position="absolute"
+              mt={-5}
+              alignItems="center"
+              bg={loadMoreButtonBg}
+              _hover={{ bg: loadMoreButtonHoverBg }}
+              onClick={() => setPage(page + 1)}
+            >
+              Load more messages
+            </Button>
+          </Flex>
+        ) : null}
         {messages?.map((message) => {
           const currentUser = Number(message.userId) === Number(auth?.user?.id)
 
-          return (
-            <Box
-              bg={currentUser ? 'green.600' : 'gray.500'}
-              color="white"
-              key={message.timestamp}
-              borderRadius="lg"
-              maxWidth={{ base: 'xs', lg: 'xl' }}
-              marginLeft={currentUser ? 'auto' : 0}
-              px={4}
-              py={2}
-              my={2}
-            >
-              <VStack>
-                <Text marginRight="auto">{message.content}</Text>
-                <Text marginLeft="auto" fontSize="x-small" color={currentUser ? 'green.200' : 'gray.200'}>
-                  {resolveMessageDateAndTime(message.timestamp)}
-                </Text>
-              </VStack>
-            </Box>
-          )
+          return <ChatMessage key={message.timestamp} currentUser={currentUser} message={message} />
         })}
-      </Box>
-      <div ref={ref} />
-      <Box p={4} bottom={0} position="fixed">
-        <Form defaultValues={{ content: '' }} onSubmit={handleMessageSend} resetOnSubmit>
+        <div ref={ref} />
+      </Flex>
+      <Flex
+        p={4}
+        bottom={0}
+        position="relative"
+        display="block"
+        width="100%"
+        bg={useColorModeValue('gray.50', 'gray.800')}
+        borderTop={1}
+        borderStyle="solid"
+        borderColor={useColorModeValue('gray.200', 'gray.700')}
+      >
+        <Form defaultValues={{ content: '' }} onSubmit={handleMessageSend} resetOnSubmit withoutDefaultActions>
           <ChatForm />
         </Form>
-      </Box>
-    </>
+      </Flex>
+    </Flex>
   )
 }
 

@@ -1170,7 +1170,9 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null, messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null }> };
+export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> };
+
+export type PaginationPropsFragment = { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } };
 
 export type UserPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null };
 
@@ -1200,19 +1202,26 @@ export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissio
 
 export type GetConversationQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
 }>;
 
 
-export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null } | null } | null };
+export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null } | null } | null } | null };
 
 export type GetConversationsQueryVariables = Exact<{
   filters?: InputMaybe<ConversationFiltersInput>;
 }>;
 
 
-export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null, messages?: { __typename?: 'MessageRelationResponseCollection', data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null } | null }> } | null };
+export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> } | null };
+
+export type GetMessagesQueryVariables = Exact<{
+  filters?: InputMaybe<MessageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+}>;
+
+
+export type GetMessagesQuery = { __typename?: 'Query', messages?: { __typename?: 'MessageEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } }, data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null } | null } | null } | null }> } | null };
 
 export type GetUsersQueryVariables = Exact<{
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
@@ -1221,6 +1230,37 @@ export type GetUsersQueryVariables = Exact<{
 
 export type GetUsersQuery = { __typename?: 'Query', usersPermissionsUsers?: { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null } | null }> } | null };
 
+export const ConversationsPropsFragmentDoc = `
+    fragment ConversationsProps on ConversationEntityResponseCollection {
+  data {
+    id
+    attributes {
+      users {
+        data {
+          id
+          attributes {
+            username
+            name
+            lastname
+            avatar_url
+            email
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const PaginationPropsFragmentDoc = `
+    fragment PaginationProps on ResponseCollectionMeta {
+  pagination {
+    total
+    page
+    pageSize
+    pageCount
+  }
+}
+    `;
 export const UserPropsFragmentDoc = `
     fragment UserProps on UsersPermissionsUserEntityResponse {
   data {
@@ -1236,38 +1276,6 @@ export const UserPropsFragmentDoc = `
   }
 }
     `;
-export const ConversationsPropsFragmentDoc = `
-    fragment ConversationsProps on ConversationEntityResponseCollection {
-  data {
-    id
-    attributes {
-      users {
-        data {
-          id
-          attributes {
-            username
-            name
-            lastname
-            avatar_url
-          }
-        }
-      }
-      messages {
-        data {
-          id
-          attributes {
-            content
-            timestamp
-            user {
-              ...UserProps
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    ${UserPropsFragmentDoc}`;
 export const UsersPropsFragmentDoc = `
     fragment UsersProps on UsersPermissionsUserEntityResponseCollection {
   data {
@@ -1348,20 +1356,20 @@ export const useUpdateUserMutation = <
       options
     );
 export const GetConversationDocument = `
-    query GetConversation($id: ID, $pagination: PaginationArg, $sort: [String]) {
+    query GetConversation($id: ID) {
   conversation(id: $id) {
     data {
       id
       attributes {
-        messages(pagination: $pagination, sort: $sort) {
+        users {
           data {
             id
             attributes {
-              content
-              timestamp
-              user {
-                ...UserProps
-              }
+              username
+              email
+              name
+              lastname
+              avatar_url
             }
           }
         }
@@ -1369,7 +1377,7 @@ export const GetConversationDocument = `
     }
   }
 }
-    ${UserPropsFragmentDoc}`;
+    `;
 export const useGetConversationQuery = <
       TData = GetConversationQuery,
       TError = unknown
@@ -1403,6 +1411,40 @@ export const useGetConversationsQuery = <
     useQuery<GetConversationsQuery, TError, TData>(
       variables === undefined ? ['GetConversations'] : ['GetConversations', variables],
       fetcher<GetConversationsQuery, GetConversationsQueryVariables>(client, GetConversationsDocument, variables, headers),
+      options
+    );
+export const GetMessagesDocument = `
+    query GetMessages($filters: MessageFiltersInput, $pagination: PaginationArg, $sort: [String]) {
+  messages(filters: $filters, pagination: $pagination, sort: $sort) {
+    meta {
+      ...PaginationProps
+    }
+    data {
+      id
+      attributes {
+        content
+        timestamp
+        user {
+          ...UserProps
+        }
+      }
+    }
+  }
+}
+    ${PaginationPropsFragmentDoc}
+${UserPropsFragmentDoc}`;
+export const useGetMessagesQuery = <
+      TData = GetMessagesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetMessagesQueryVariables,
+      options?: UseQueryOptions<GetMessagesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetMessagesQuery, TError, TData>(
+      variables === undefined ? ['GetMessages'] : ['GetMessages', variables],
+      fetcher<GetMessagesQuery, GetMessagesQueryVariables>(client, GetMessagesDocument, variables, headers),
       options
     );
 export const GetUsersDocument = `

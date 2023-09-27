@@ -13,14 +13,8 @@ interface SidebarNavItemProps extends FlexProps, PropsWithChildren {
 const SidebarNavItem: FC<SidebarNavItemProps> = ({ icon, path, children, onClose, ...props }) => {
   const { pathname } = useLocation()
 
-  const styles = {
-    navItem: {
-      bg: useColorModeValue('pink.600', 'gray.700'),
-      hover: {
-        bg: useColorModeValue('pink.500', 'gray.600'),
-      },
-    },
-  }
+  const navItemBg = useColorModeValue('pink.600', 'gray.700')
+  const navItemHoverBg = useColorModeValue('pink.500', 'gray.600')
 
   return (
     <NavLink to={path} onClick={onClose}>
@@ -30,10 +24,10 @@ const SidebarNavItem: FC<SidebarNavItemProps> = ({ icon, path, children, onClose
           p="4"
           role="group"
           cursor="pointer"
-          bg={pathname === path ? styles.navItem.bg : 'transparent'}
+          bg={pathname === path ? navItemBg : 'transparent'}
           color="white"
           _hover={{
-            bg: styles.navItem.hover.bg,
+            bg: navItemHoverBg,
             color: 'white',
           }}
           {...props}

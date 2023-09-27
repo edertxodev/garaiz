@@ -9,7 +9,7 @@ const ChatList: FC = () => {
   const { data: conversations } = useConversations({ users: { username: { eq: auth?.user?.username } } })
 
   return (
-    <Box>
+    <Box w="100%">
       {conversations?.map((conversation) => (
         <ChatListItem key={conversation.id} conversation={conversation} />
       ))}

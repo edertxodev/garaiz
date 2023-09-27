@@ -10,7 +10,7 @@ interface AppRouteObject extends NonIndexRouteObject {
 
 const Loadable = (Component: any) => (props: Attributes) =>
   (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader fullPage />}>
       <Component {...props} />
     </Suspense>
   )

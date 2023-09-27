@@ -1,9 +1,13 @@
 import { FC } from 'react'
 import { Flex, Spinner } from '@chakra-ui/react'
 
-const Loader: FC = () => {
+interface LoaderProps {
+  fullPage?: boolean
+}
+
+const Loader: FC<LoaderProps> = ({ fullPage }) => {
   return (
-    <Flex minH="100vh" align="center" justify="center">
+    <Flex align="center" justify="center" minHeight={fullPage ? '100vh' : 0} width="100%">
       <Spinner />
     </Flex>
   )

@@ -21,17 +21,6 @@ const ChatListItem: FC<ChatListItemProps> = ({ conversation }) => {
     }
   }, [user])
 
-  const styles = {
-    listItem: {
-      hover: {
-        bg: useColorModeValue('gray.100', 'gray.600'),
-      },
-    },
-    avatar: {
-      bg: useColorModeValue('pink.100', 'gray.400'),
-    },
-  }
-
   return (
     <NavLink to={getRoutePathByName('chatDetail', { conversationId: conversation.id })}>
       <Box
@@ -40,11 +29,16 @@ const ChatListItem: FC<ChatListItemProps> = ({ conversation }) => {
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.700')}
         _hover={{
-          bg: styles.listItem.hover.bg,
+          bg: useColorModeValue('gray.100', 'gray.600'),
         }}
       >
         <HStack gap={4}>
-          <Avatar size="lg" name={name} src={user?.attributes?.avatar_url ?? undefined} bg={styles.avatar.bg} />
+          <Avatar
+            size="lg"
+            name={name}
+            src={user?.attributes?.avatar_url ?? undefined}
+            bg={useColorModeValue('pink.100', 'gray.400')}
+          />
           <Box fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
             {name}
           </Box>

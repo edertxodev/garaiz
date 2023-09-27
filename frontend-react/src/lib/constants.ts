@@ -3,3 +3,5 @@ export const LOCAL_STORAGE_KEYS = {
   user: 'user',
   locale: 'locale',
 }
+
+export const DEFAULT_PAGE_SIZE = 25

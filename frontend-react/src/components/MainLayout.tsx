@@ -1,4 +1,4 @@
-import { Box, Drawer, DrawerContent, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Drawer, DrawerContent, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import { FC } from 'react'
 import { useAuth } from 'lib/auth/AuthContext'
 import { useRoutes } from 'react-router-dom'
@@ -12,7 +12,7 @@ const MainLayout: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
-    <Box>
+    <Flex minHeight="100vh">
       {auth?.user ? <Sidebar onClose={onClose} display={{ base: 'none', md: 'block' }} /> : null}
       <Drawer
         isOpen={isOpen}
@@ -20,22 +20,24 @@ const MainLayout: FC = () => {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
+        size="xs"
       >
         <DrawerContent>
           <Sidebar onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <Header onOpen={onOpen} />
-      <Box
-        ml={{ base: 0, md: auth?.user ? 72 : 0 }}
+      <Flex
+        pl={{ base: 0, md: auth?.user ? 72 : 0 }}
         pt={16}
-        minHeight="100vh"
+        display="flex"
+        width="100%"
+        height="100vh"
         bg={useColorModeValue('gray.50', 'gray.800')}
       >
         {content}
-      </Box>
-    </Box>
+      </Flex>
+    </Flex>
   )
 }
 
