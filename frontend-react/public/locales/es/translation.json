@@ -1,4 +1,9 @@
 {
+  "chat": {
+    "placeholder": {
+      "message": "Escribe tu mensaje..."
+    }
+  },
   "links": {
     "chat": "Chat",
     "home": "Inicio"

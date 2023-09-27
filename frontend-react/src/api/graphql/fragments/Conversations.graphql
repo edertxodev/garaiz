@@ -1,0 +1,19 @@
+fragment ConversationsProps on ConversationEntityResponseCollection {
+  data {
+    id
+    attributes {
+      users {
+        data {
+          id
+          attributes {
+            username
+            name
+            lastname
+            avatar_url
+            email
+          }
+        }
+      }
+    }
+  }
+}

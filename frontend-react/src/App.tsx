@@ -2,7 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import AuthContext, { User } from 'lib/auth/AuthContext'
+import AuthContext, { AuthContextValues, User } from 'lib/auth/AuthContext'
 import MainLayout from 'components/MainLayout'
 import crypto from 'crypto-js'
 
@@ -15,9 +15,7 @@ const App = () => {
       : undefined
   )
 
-  const authContext = useMemo(() => ({ user, setUser }), [user])
-
-  console.log('kaixooo', user)
+  const authContext = useMemo<AuthContextValues>(() => ({ user, setUser }), [user])
 
   return (
     <QueryClientProvider client={queryCache}>

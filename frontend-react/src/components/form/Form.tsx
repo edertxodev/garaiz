@@ -18,6 +18,7 @@ interface FormProps<T extends FieldValues = any> extends ComponentProps<'form'> 
   submitText?: string | null
   submitErrors?: FormSubmitError[]
   resetOnSubmit?: boolean
+  withoutDefaultActions?: boolean
 }
 
 const Form: FC<FormProps> = ({
@@ -27,6 +28,7 @@ const Form: FC<FormProps> = ({
   submitText,
   submitErrors,
   resetOnSubmit,
+  withoutDefaultActions,
   children,
 }) => {
   const { t } = useTranslation()
@@ -36,41 +38,26 @@ const Form: FC<FormProps> = ({
     defaultValues,
   })
 
-  const keyDownHandler = (event: KeyboardEvent) => {
-    if (validationSchema) {
-      if (event.key && event.key.toLowerCase() === 'enter') {
-        validationSchema.validate(form.getValues()).then(() => {
-          onSubmit?.(form.getValues())
-          if (resetOnSubmit) form.reset()
-        })
-      }
-    } else {
-      if (event.key && event.key.toLowerCase() === 'enter') {
-        onSubmit?.(form.getValues())
-        if (resetOnSubmit) form.reset()
-      }
-    }
-  }
-
   useEffect(() => {
-    window.addEventListener('keydown', keyDownHandler, false)
-
-    return () => window.removeEventListener('keydown', keyDownHandler, false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (form.formState.isSubmitted && resetOnSubmit) {
+      form.reset()
+    }
+  }, [form, form.formState.isSubmitted, resetOnSubmit])
 
   return (
     <FormProvider {...form}>
-      {children}
-      <div className="text-center mb-6">
-        {submitErrors?.map((submitError) => (
-          <span key={submitError.statusCode} className="text-xs font-bold text-red-500">{`${t(
-            submitError.messageKey
-          )}`}</span>
-        ))}
-      </div>
-      <SubmitButton submit={onSubmit}>{submitText ?? t('form.button.save')}</SubmitButton>
-      {import.meta.env.MODE === 'development' && <DevTool control={form.control} />}
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        {children}
+        <div className="text-center mb-6">
+          {submitErrors?.map((submitError) => (
+            <span key={submitError.statusCode} className="text-xs font-bold text-red-500">{`${t(
+              submitError.messageKey
+            )}`}</span>
+          ))}
+        </div>
+        {!withoutDefaultActions ? <SubmitButton>{submitText ?? t('form.button.save')}</SubmitButton> : null}
+        {import.meta.env.MODE === 'development' && <DevTool control={form.control} />}
+      </form>
     </FormProvider>
   )
 }

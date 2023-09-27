@@ -1,0 +1,8 @@
+fragment PaginationProps on ResponseCollectionMeta {
+  pagination {
+    total
+    page
+    pageSize
+    pageCount
+  }
+}

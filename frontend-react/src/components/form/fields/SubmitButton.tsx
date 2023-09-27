@@ -1,18 +1,15 @@
 import { FC, PropsWithChildren } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-interface SubmitButtonProps extends PropsWithChildren {
-  submit?: any
-}
+interface SubmitButtonProps extends PropsWithChildren {}
 
-const SubmitButton: FC<SubmitButtonProps> = ({ submit, children }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ children }) => {
   const {
-    handleSubmit,
     formState: { isValid },
   } = useFormContext()
 
   return (
-    <button onClick={handleSubmit(submit)} disabled={!isValid}>
+    <button type="submit" disabled={!isValid}>
       {children}
     </button>
   )

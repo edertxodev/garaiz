@@ -1,4 +1,4 @@
-import { Server } from 'socket.io'
+import { initializeChatService } from './services/chat'
 
 export default {
   /**
@@ -17,26 +17,6 @@ export default {
    * run jobs, or perform some special logic.
    */
   bootstrap({ strapi }) {
-    const io = new Server(strapi.server.httpServer, {
-      cors: {
-        origin: 'http://localhost:5173',
-      },
-    })
-
-    io.on('connection', (socket) => {
-      const users = []
-      io.of('/').sockets.forEach((socket) => {
-        const username = socket.handshake.auth.username
-        users.push({
-          userID: socket.id,
-          username,
-        })
-      })
-      socket.emit('users', users)
-      const username = socket.handshake.auth.username
-      console.log(`User ${username} connected`)
-      socket.on('disconnect', () => console.log(`User ${username} disconnected`))
-      socket.on('message', (message) => io.emit('broadcast', `${username}: ${message}`))
-    })
+    initializeChatService(strapi)
   },
 }

@@ -1,0 +1,5 @@
+query GetConversations($filters: ConversationFiltersInput) {
+  conversations(filters: $filters) {
+    ...ConversationsProps
+  }
+}
