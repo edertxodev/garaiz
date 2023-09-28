@@ -4,7 +4,8 @@
   "info": {
     "singularName": "conversation",
     "pluralName": "conversations",
-    "displayName": "Conversation"
+    "displayName": "Conversation",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -17,11 +18,15 @@
       "target": "api::message.message",
       "mappedBy": "conversation"
     },
+    "uuid": {
+      "type": "customField",
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
     "users": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "conversation"
+      "mappedBy": "conversations"
     }
   }
 }

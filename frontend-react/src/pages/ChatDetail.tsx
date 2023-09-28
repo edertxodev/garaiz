@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Button, Divider, Flex, useColorModeValue } from '@chakra-ui/react'
 import { DEFAULT_PAGE_SIZE } from 'lib/constants'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Maybe, UsersPermissionsUser } from 'api/graphql/generated/graphql'
@@ -12,12 +12,13 @@ import {
 import { resolveUserCompleteName } from 'lib/resolvers/userResolvers'
 import { useAuth } from 'lib/auth/AuthContext'
 import { useParams } from 'react-router-dom'
+import ChatDetailHeader from 'components/chat/ChatDetailHeader'
 import ChatForm from 'components/chat/ChatForm'
 import ChatMessage from 'components/chat/ChatMessage'
 import Form from 'components/form/Form'
 import Loader from 'components/common/styled/Loader'
 import moment from 'moment'
-import useConversation from 'api/graphql/hooks/Conversation/useConversation'
+import useConversations from 'api/graphql/hooks/Conversation/useConversations'
 import useCreateMessage from 'api/graphql/hooks/Message/useCreateMessage'
 import useMessages from 'api/graphql/hooks/Message/useMessages'
 import useScroll from 'lib/hooks/useScroll'
@@ -30,13 +31,15 @@ const ChatView: FC = () => {
   const [page, setPage] = useState<number>(1)
   const [otherUser, setOtherUser] = useState<UsersPermissionsUser>()
   const { scrollY } = useScroll()
-  const { data: conversation } = useConversation(conversationId)
+  const { data: conversations } = useConversations({ uuid: { eq: conversationId } })
   const {
     data: messagesResponse,
     refetch: refetchMessages,
     status: messagesStatus,
     pagination: messagesPagination,
-  } = useMessages({ conversation: { id: { eq: conversationId } } }, { pageSize: DEFAULT_PAGE_SIZE, page }, ['id:desc'])
+  } = useMessages({ conversation: { uuid: { eq: conversationId } } }, { pageSize: DEFAULT_PAGE_SIZE, page }, [
+    'id:desc',
+  ])
   const { mutateAsync: createMessage } = useCreateMessage()
 
   const loadMoreButtonBg = useColorModeValue('gray.50', 'gray.800')
@@ -99,41 +102,32 @@ const ChatView: FC = () => {
 
   // Set other user
   useEffect(() => {
-    const otherUser = conversation?.attributes?.users?.data.find((el) => Number(el.id) !== Number(auth?.user?.id))
+    const otherUser = conversations?.[0]?.attributes?.users?.data.find((el) => Number(el.id) !== Number(auth?.user?.id))
     if (otherUser?.attributes) setOtherUser(otherUser?.attributes)
-  }, [auth?.user?.id, conversation])
+  }, [auth?.user?.id, conversations])
 
   const handleMessageSend = useCallback(
     (data: any) => {
       const timestamp = moment().format()
       const messageData: Message = {
         ...data,
-        conversationId: conversationId,
+        conversationId: conversations?.[0].id,
         userId: auth?.user?.id,
         userCompleteName: resolveUserCompleteName(auth?.user as Maybe<UsersPermissionsUser>),
         timestamp,
+        uuid: conversationId,
       }
       sendMessage(messageData)
-      createMessage({ data: { conversation: conversationId, content: data.content, timestamp, user: auth?.user?.id } })
+      createMessage({
+        data: { conversation: conversations?.[0].id, content: data.content, timestamp, user: auth?.user?.id },
+      })
     },
-    [auth?.user, conversationId, createMessage]
+    [auth?.user, conversationId, conversations, createMessage]
   )
 
   return (
     <Flex direction="column" width="100%">
-      <Flex width="100%" bg={useColorModeValue('pink.400', 'gray.600')}>
-        <HStack gap={4} px={4} py={2}>
-          <Avatar
-            size="lg"
-            name={resolveUserCompleteName(otherUser)}
-            src={otherUser?.avatar_url ?? undefined}
-            bg={useColorModeValue('pink.200', 'gray.400')}
-          />
-          <Text fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
-            {resolveUserCompleteName(otherUser)}
-          </Text>
-        </HStack>
-      </Flex>
+      <ChatDetailHeader user={otherUser} conversation={conversations?.[0]} />
       <Flex p={4} width="100%" overflowY="auto" direction="column" minHeight={{ base: '75%', xl: '81%' }}>
         {messagesStatus === 'loading' ? <Loader /> : null}
         {messagesStatus !== 'loading' && messagesPagination?.pageCount && page < messagesPagination?.pageCount ? (

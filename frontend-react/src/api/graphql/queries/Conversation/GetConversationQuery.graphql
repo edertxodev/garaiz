@@ -3,6 +3,7 @@ query GetConversation($id: ID) {
     data {
       id
       attributes {
+        uuid
         users {
           data {
             id

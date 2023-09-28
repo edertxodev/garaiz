@@ -16,7 +16,8 @@
     "@strapi/plugin-users-permissions": "4.11.7",
     "@strapi/strapi": "4.11.7",
     "better-sqlite3": "8.5.0",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "strapi-advanced-uuid": "^1.0.11"
   },
   "author": {
     "name": "Eder Ferreira"

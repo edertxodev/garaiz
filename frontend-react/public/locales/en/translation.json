@@ -1,8 +1,25 @@
 {
   "chat": {
+    "conversations": {
+      "modal": {
+        "empty": "No users available",
+        "title": "Select a user"
+      }
+    },
     "placeholder": {
       "message": "Write your message..."
     }
+  },
+  "general": {
+    "confirmModal": {
+      "message": "Are you sure?"
+    },
+    "delete": "Delete",
+    "no": "No",
+    "profile": "Profile",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "yes": "Yes"
   },
   "links": {
     "chat": "Chat",

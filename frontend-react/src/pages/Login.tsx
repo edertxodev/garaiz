@@ -84,7 +84,14 @@ const Login: FC = () => {
               <Button colorScheme="gray" w="100%" leftIcon={<GoogleIcon />} onClick={() => googleLogin()}>
                 {t('login.texts.signIn', { name: 'Google' })}
               </Button>
-              <Button bg="gray.900" _hover={{ bg: 'gray.800' }} color="white" w="100%" leftIcon={<GithubIcon />}>
+              <Button
+                bg="gray.900"
+                _hover={{ bg: 'gray.800' }}
+                color="white"
+                w="100%"
+                leftIcon={<GithubIcon />}
+                isDisabled
+              >
                 {t('login.texts.signIn', { name: 'Github' })}
               </Button>
             </Stack>

@@ -1,8 +1,25 @@
 {
   "chat": {
+    "conversations": {
+      "modal": {
+        "empty": "No hay usuarios disponibles",
+        "title": "Selecciona un usuario"
+      }
+    },
     "placeholder": {
       "message": "Escribe tu mensaje..."
     }
+  },
+  "general": {
+    "confirmModal": {
+      "message": "¿Seguro que quieres realizar esta acción?"
+    },
+    "delete": "Eliminar",
+    "no": "No",
+    "profile": "Perfil",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "yes": "Si"
   },
   "links": {
     "chat": "Chat",

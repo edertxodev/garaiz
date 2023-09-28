@@ -2,6 +2,9 @@ mutation CreateConversation($data: ConversationInput!) {
   createConversation(data: $data) {
     data {
       id
+      attributes {
+        uuid
+      }
     }
   }
 }
