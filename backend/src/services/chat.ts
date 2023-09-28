@@ -22,8 +22,8 @@ export const initializeChatService = (strapi: Strapi) => {
     console.log(`User ${username} connected`)
     socket.on('disconnect', () => console.log(`User ${username} disconnected`))
     socket.on('messageData', (messageData) => {
-      console.log(`broadcast-${messageData.conversationId}`)
-      io.emit(`broadcast-${messageData.conversationId}`, messageData)
+      console.log(`broadcast-${messageData.uuid}`)
+      io.emit(`broadcast-${messageData.uuid}`, messageData)
     })
   })
 }

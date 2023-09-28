@@ -19,12 +19,10 @@ const Sidebar: FC<SidebarProps> = ({ onClose, ...props }) => {
     <Box
       transition="3s ease"
       bg={useColorModeValue('pink.700', 'gray.800')}
-      borderRight="1px"
-      borderRightColor={useColorModeValue('pink.600', 'gray.700')}
       w={{ base: 'full', md: 72 }}
       position="fixed"
       h="full"
-      zIndex={9999}
+      zIndex={10}
       {...props}
     >
       <Flex h={20} alignItems="center" mx={8} justifyContent="space-between">

@@ -2,6 +2,7 @@ fragment ConversationsProps on ConversationEntityResponseCollection {
   data {
     id
     attributes {
+      uuid
       users {
         data {
           id

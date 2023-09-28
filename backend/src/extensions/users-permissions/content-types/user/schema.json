@@ -85,9 +85,9 @@
     "avatar_url": {
       "type": "string"
     },
-    "conversation": {
+    "conversations": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::conversation.conversation",
       "inversedBy": "users"
     }

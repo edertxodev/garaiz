@@ -10,5 +10,6 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "i18n-ally.sourceLanguage": "es"
 }

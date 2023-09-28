@@ -31,6 +31,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { useAuth } from 'lib/auth/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 interface HeaderProps {
   onOpen: () => void
@@ -38,6 +39,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ onOpen }) => {
   const { colorMode, toggleColorMode } = useColorMode()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const auth = useAuth()
 
@@ -92,7 +94,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
               _hover={{ bg: 'pink.300' }}
               onClick={() => navigate(getRoutePathByName('login'))}
             >
-              Sign in
+              {t('general.signIn')}
             </Button>
           ) : (
             <>
@@ -115,12 +117,12 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                   <MenuList bg={menuListBg} borderColor={menuListBorderColor} p={0}>
                     <MenuItem py={4} gap={4}>
                       <FontAwesomeIcon icon={faUser} />
-                      Profile
+                      {t('general.profile')}
                     </MenuItem>
                     <MenuDivider borderColor={menuListDividerBorderColor} my={0} />
                     <MenuItem py={4} gap={4} onClick={handleLogout}>
                       <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                      Sign out
+                      {t('general.signOut')}
                     </MenuItem>
                   </MenuList>
                 </Menu>

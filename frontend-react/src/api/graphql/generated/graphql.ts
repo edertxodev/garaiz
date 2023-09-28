@@ -59,6 +59,7 @@ export type Conversation = {
   messages?: Maybe<MessageRelationResponseCollection>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   users?: Maybe<UsersPermissionsUserRelationResponseCollection>;
+  uuid?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -101,11 +102,13 @@ export type ConversationFiltersInput = {
   or?: InputMaybe<Array<InputMaybe<ConversationFiltersInput>>>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   users?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  uuid?: InputMaybe<StringFilterInput>;
 };
 
 export type ConversationInput = {
   messages?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   users?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  uuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DateFilterInput = {
@@ -1170,7 +1173,7 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> };
+export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> };
 
 export type PaginationPropsFragment = { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } };
 
@@ -1183,7 +1186,14 @@ export type CreateConversationMutationVariables = Exact<{
 }>;
 
 
-export type CreateConversationMutation = { __typename?: 'Mutation', createConversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null } | null } | null };
+export type CreateConversationMutation = { __typename?: 'Mutation', createConversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null } | null } | null } | null };
+
+export type DeleteConversationMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteConversationMutation = { __typename?: 'Mutation', deleteConversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null } | null } | null };
 
 export type CreateMessageMutationVariables = Exact<{
   data: MessageInput;
@@ -1191,6 +1201,13 @@ export type CreateMessageMutationVariables = Exact<{
 
 
 export type CreateMessageMutation = { __typename?: 'Mutation', createMessage?: { __typename?: 'MessageEntityResponse', data?: { __typename?: 'MessageEntity', id?: string | null } | null } | null };
+
+export type DeleteMessageMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteMessageMutation = { __typename?: 'Mutation', deleteMessage?: { __typename?: 'MessageEntityResponse', data?: { __typename?: 'MessageEntity', id?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1205,14 +1222,14 @@ export type GetConversationQueryVariables = Exact<{
 }>;
 
 
-export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null } | null } | null } | null };
+export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null } | null } | null } | null };
 
 export type GetConversationsQueryVariables = Exact<{
   filters?: InputMaybe<ConversationFiltersInput>;
 }>;
 
 
-export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> } | null };
+export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> } | null };
 
 export type GetMessagesQueryVariables = Exact<{
   filters?: InputMaybe<MessageFiltersInput>;
@@ -1235,6 +1252,7 @@ export const ConversationsPropsFragmentDoc = `
   data {
     id
     attributes {
+      uuid
       users {
         data {
           id
@@ -1296,6 +1314,9 @@ export const CreateConversationDocument = `
   createConversation(data: $data) {
     data {
       id
+      attributes {
+        uuid
+      }
     }
   }
 }
@@ -1311,6 +1332,28 @@ export const useCreateConversationMutation = <
     useMutation<CreateConversationMutation, TError, CreateConversationMutationVariables, TContext>(
       ['CreateConversation'],
       (variables?: CreateConversationMutationVariables) => fetcher<CreateConversationMutation, CreateConversationMutationVariables>(client, CreateConversationDocument, variables, headers)(),
+      options
+    );
+export const DeleteConversationDocument = `
+    mutation DeleteConversation($id: ID!) {
+  deleteConversation(id: $id) {
+    data {
+      id
+    }
+  }
+}
+    `;
+export const useDeleteConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteConversationMutation, TError, DeleteConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteConversationMutation, TError, DeleteConversationMutationVariables, TContext>(
+      ['DeleteConversation'],
+      (variables?: DeleteConversationMutationVariables) => fetcher<DeleteConversationMutation, DeleteConversationMutationVariables>(client, DeleteConversationDocument, variables, headers)(),
       options
     );
 export const CreateMessageDocument = `
@@ -1333,6 +1376,28 @@ export const useCreateMessageMutation = <
     useMutation<CreateMessageMutation, TError, CreateMessageMutationVariables, TContext>(
       ['CreateMessage'],
       (variables?: CreateMessageMutationVariables) => fetcher<CreateMessageMutation, CreateMessageMutationVariables>(client, CreateMessageDocument, variables, headers)(),
+      options
+    );
+export const DeleteMessageDocument = `
+    mutation DeleteMessage($id: ID!) {
+  deleteMessage(id: $id) {
+    data {
+      id
+    }
+  }
+}
+    `;
+export const useDeleteMessageMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteMessageMutation, TError, DeleteMessageMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteMessageMutation, TError, DeleteMessageMutationVariables, TContext>(
+      ['DeleteMessage'],
+      (variables?: DeleteMessageMutationVariables) => fetcher<DeleteMessageMutation, DeleteMessageMutationVariables>(client, DeleteMessageDocument, variables, headers)(),
       options
     );
 export const UpdateUserDocument = `
@@ -1361,6 +1426,7 @@ export const GetConversationDocument = `
     data {
       id
       attributes {
+        uuid
         users {
           data {
             id

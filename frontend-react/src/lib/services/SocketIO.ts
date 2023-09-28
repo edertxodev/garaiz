@@ -8,6 +8,7 @@ export interface Message {
   userCompleteName?: string
   content?: string
   timestamp?: string
+  uuid?: string
 }
 
 export const initiateSocketConnection = (username: string) => {
