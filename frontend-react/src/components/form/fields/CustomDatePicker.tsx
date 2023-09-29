@@ -1,6 +1,3 @@
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
-
 import { Calendar } from 'react-date-range'
 import { FC, SyntheticEvent, useEffect, useMemo, useState } from 'react'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
@@ -11,6 +8,8 @@ import Modal from 'components/common/Modal'
 import en from 'date-fns/locale/en-GB'
 import es from 'date-fns/locale/es'
 import eu from 'date-fns/locale/eu'
+
+import 'components/form/fields/CustomDatePicker.less'
 
 interface CustomDatePickerProps {
   name: string

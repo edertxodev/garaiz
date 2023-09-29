@@ -33,12 +33,14 @@
       "green": "Green",
       "orange": "Orange",
       "pink": "Pink",
-      "red": "Red"
+      "red": "Red",
+      "yellow": "Yellow"
     },
     "confirmModal": {
       "message": "Are you sure?"
     },
     "delete": "Delete",
+    "failed": "",
     "genders": {
       "female": "",
       "male": "Male",
@@ -48,6 +50,8 @@
     "profile": "Profile",
     "signIn": "Sign in",
     "signOut": "Sign out",
+    "updated": "",
+    "updating": "",
     "yes": "Yes"
   },
   "links": {

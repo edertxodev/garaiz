@@ -1,12 +1,14 @@
 import { Button, Flex, useColorModeValue } from '@chakra-ui/react'
 import { FC, PropsWithChildren } from 'react'
 import { useFormContext } from 'react-hook-form'
+import useUserColor from 'lib/hooks/useUserColor'
 
 interface SubmitButtonProps extends PropsWithChildren {}
 
 const SubmitButton: FC<SubmitButtonProps> = ({ children }) => {
+  const color = useUserColor()
   const {
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
   } = useFormContext()
 
   return (
@@ -14,10 +16,11 @@ const SubmitButton: FC<SubmitButtonProps> = ({ children }) => {
       <Button
         type="submit"
         isDisabled={!isValid}
-        bg={useColorModeValue('pink.600', 'gray.600')}
-        _hover={{ bg: useColorModeValue('pink.500', 'gray.500') }}
+        bg={useColorModeValue(`${color}.600`, 'gray.600')}
+        _hover={{ bg: useColorModeValue(`${color}.500`, 'gray.500') }}
         color="white"
         size="lg"
+        isLoading={isSubmitting}
       >
         {children}
       </Button>

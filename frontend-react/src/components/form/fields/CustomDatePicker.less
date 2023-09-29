@@ -1,0 +1,45 @@
+@import url('react-date-range/dist/styles.css');
+@import url('react-date-range/dist/theme/default.css');
+
+.rdrCalendarWrapper {
+  .rdrMonth {
+    width: 100%;
+  }
+}
+
+.chakra-ui-dark {
+  .rdrCalendarWrapper {
+    background: var(--chakra-colors-gray-700);
+    .rdrMonthAndYearWrapper {
+      .rdrMonthAndYearPickers select {
+        background-color: var(--chakra-colors-gray-400);
+      }
+      .rdrNextPrevButton {
+        background: var(--chakra-colors-gray-400);
+      }
+    }
+    .rdrDays {
+      .rdrDay {
+        .rdrDayNumber {
+          span {
+            color: var(--chakra-colors-white);
+          }
+        }
+
+        &.rdrDayPassive {
+          .rdrDayNumber {
+            span {
+              color: var(--chakra-colors-gray-400);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.chakra-ui-light {
+  .rdrCalendarWrapper {
+    background: var(--chakra-colors-white);
+  }
+}

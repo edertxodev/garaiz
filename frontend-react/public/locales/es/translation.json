@@ -33,12 +33,14 @@
       "green": "Verde",
       "orange": "Naranja",
       "pink": "Rosa",
-      "red": "Rojo"
+      "red": "Rojo",
+      "yellow": "Amarillo"
     },
     "confirmModal": {
       "message": "¿Seguro que quieres realizar esta acción?"
     },
     "delete": "Eliminar",
+    "failed": "Ups! Algo salió mal :(",
     "genders": {
       "female": "Mujer",
       "male": "Hombre",
@@ -48,6 +50,8 @@
     "profile": "Perfil",
     "signIn": "Iniciar sesión",
     "signOut": "Cerrar sesión",
+    "updated": "Actualizado correctamente",
+    "updating": "Actualizando...",
     "yes": "Si"
   },
   "links": {
