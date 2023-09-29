@@ -3,6 +3,7 @@ import { FC, PropsWithChildren } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { NavLink, useLocation } from 'react-router-dom'
+import useUserColor from 'lib/hooks/useUserColor'
 
 interface SidebarNavItemProps extends FlexProps, PropsWithChildren {
   icon?: IconProp
@@ -12,9 +13,10 @@ interface SidebarNavItemProps extends FlexProps, PropsWithChildren {
 
 const SidebarNavItem: FC<SidebarNavItemProps> = ({ icon, path, children, onClose, ...props }) => {
   const { pathname } = useLocation()
+  const color = useUserColor()
 
-  const navItemBg = useColorModeValue('pink.600', 'gray.700')
-  const navItemHoverBg = useColorModeValue('pink.500', 'gray.600')
+  const navItemBg = useColorModeValue(`${color}.600`, 'gray.700')
+  const navItemHoverBg = useColorModeValue(`${color}.500`, 'gray.600')
 
   return (
     <NavLink to={path} onClick={onClose}>

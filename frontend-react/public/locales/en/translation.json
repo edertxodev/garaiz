@@ -10,11 +10,40 @@
       "message": "Write your message..."
     }
   },
+  "form": {
+    "button": {
+      "save": ""
+    },
+    "errors": {
+      "minLength": "",
+      "required": ""
+    },
+    "fields": {
+      "birthdate": "",
+      "color": "",
+      "gender": "",
+      "lastname": "",
+      "name": "",
+      "selectOne": "Select one..."
+    }
+  },
   "general": {
+    "colors": {
+      "blue": "Blue",
+      "green": "Green",
+      "orange": "Orange",
+      "pink": "Pink",
+      "red": "Red"
+    },
     "confirmModal": {
       "message": "Are you sure?"
     },
     "delete": "Delete",
+    "genders": {
+      "female": "",
+      "male": "Male",
+      "other": "Other"
+    },
     "no": "No",
     "profile": "Profile",
     "signIn": "Sign in",

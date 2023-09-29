@@ -17,6 +17,7 @@ const Loadable = (Component: any) => (props: Attributes) =>
 
 const Home = Loadable(lazy(() => import('pages/Home')))
 const Login = Loadable(lazy(() => import('pages/Login')))
+const Profile = Loadable(lazy(() => import('pages/Profile')))
 const ChatList = Loadable(lazy(() => import('pages/ChatList')))
 const ChatDetail = Loadable(lazy(() => import('pages/ChatDetail')))
 
@@ -30,6 +31,15 @@ const AppRoutes: AppRouteObject[] = [
       </GuestGuard>
     ),
     name: 'login',
+  },
+  {
+    path: '/profile',
+    element: (
+      <AuthRoute>
+        <Profile />
+      </AuthRoute>
+    ),
+    name: 'profile',
   },
   {
     path: '/chat',

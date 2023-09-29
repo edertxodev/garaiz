@@ -4,12 +4,15 @@ import { faComments, faHome } from '@fortawesome/free-solid-svg-icons'
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { t } from 'i18next'
 import SidebarNavItem from 'components/common/SidebarNavItem'
+import useUserColor from 'lib/hooks/useUserColor'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
 }
 
 const Sidebar: FC<SidebarProps> = ({ onClose, ...props }) => {
+  const color = useUserColor()
+
   const linkItems = [
     { name: t('links.home'), icon: faHome, path: getRoutePathByName('home') },
     { name: t('links.chat'), icon: faComments, path: getRoutePathByName('chatList') },
@@ -18,7 +21,7 @@ const Sidebar: FC<SidebarProps> = ({ onClose, ...props }) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue('pink.700', 'gray.800')}
+      bg={useColorModeValue(`${color}.700`, 'gray.800')}
       w={{ base: 'full', md: 72 }}
       position="fixed"
       h="full"

@@ -21,6 +21,7 @@ import { getRoutePathByName } from 'lib/routes/helpers'
 import { resolveUserCompleteName } from 'lib/resolvers/userResolvers'
 import { useTranslation } from 'react-i18next'
 import useDeleteConversation from 'api/graphql/hooks/Conversation/useDeleteConversation'
+import useUserColor from 'lib/hooks/useUserColor'
 
 const ConfirmationModal = lazy(() => import('components/common/ConfirmationModal'))
 
@@ -32,6 +33,7 @@ interface ChatDetailHeaderProps {
 const ChatDetailHeader: FC<ChatDetailHeaderProps> = ({ user, conversation }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const color = useUserColor()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { mutateAsync: deleteConversation } = useDeleteConversation()
 
@@ -43,13 +45,13 @@ const ChatDetailHeader: FC<ChatDetailHeaderProps> = ({ user, conversation }) => 
 
   return (
     <>
-      <Flex width="100%" bg={useColorModeValue('pink.700', 'gray.600')} color="white">
+      <Flex width="100%" bg={useColorModeValue(`${color}.700`, 'gray.600')} color="white">
         <HStack gap={4} px={4} py={2}>
           <NavLink to={getRoutePathByName('chatList')}>
             <IconButton
               aria-label="go back"
               variant="ghost"
-              _hover={{ bg: useColorModeValue('pink.600', 'gray.500') }}
+              _hover={{ bg: useColorModeValue(`${color}.600`, 'gray.500') }}
               color="white"
             >
               <FontAwesomeIcon icon={faArrowLeft} size="lg" />
@@ -59,7 +61,7 @@ const ChatDetailHeader: FC<ChatDetailHeaderProps> = ({ user, conversation }) => 
             size="lg"
             name={resolveUserCompleteName(user)}
             src={user?.avatar_url ?? undefined}
-            bg={useColorModeValue('pink.200', 'gray.400')}
+            bg={useColorModeValue(`${color}.200`, 'gray.400')}
           />
           <Text fontWeight="semibold" as="h4" lineHeight="tight" noOfLines={1}>
             {resolveUserCompleteName(user)}
@@ -73,7 +75,7 @@ const ChatDetailHeader: FC<ChatDetailHeaderProps> = ({ user, conversation }) => 
                 aria-label="context menu"
                 variant="unstyled"
                 mr={4}
-                _hover={{ bg: useColorModeValue('pink.600', 'gray.500') }}
+                _hover={{ bg: useColorModeValue(`${color}.600`, 'gray.500') }}
               >
                 <FontAwesomeIcon icon={faEllipsisVertical} />
               </IconButton>
@@ -82,8 +84,8 @@ const ChatDetailHeader: FC<ChatDetailHeaderProps> = ({ user, conversation }) => 
               <MenuItem
                 py={4}
                 gap={4}
-                bg={useColorModeValue('pink.600', 'gray.500')}
-                _hover={{ bg: useColorModeValue('pink.500', 'gray.400') }}
+                bg={useColorModeValue(`${color}.600`, 'gray.500')}
+                _hover={{ bg: useColorModeValue(`${color}.500`, 'gray.400') }}
                 onClick={onOpen}
               >
                 <FontAwesomeIcon icon={faTrash} />

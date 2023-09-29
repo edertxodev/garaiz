@@ -8,6 +8,8 @@ fragment UsersProps on UsersPermissionsUserEntityResponseCollection {
       lastname
       birthdate
       gender
+      avatar_url
+      color
     }
   }
 }

@@ -103,7 +103,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                 <Menu>
                   <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
                     <HStack>
-                      <Avatar size={'sm'} src={auth.user.avatar} />
+                      <Avatar size={'sm'} src={auth.user.avatar_url ?? undefined} />
                       <VStack display={{ base: 'none', md: 'flex' }} alignItems="flex-start" spacing="1px" ml="2">
                         <Text fontSize="sm" fontWeight="bold">
                           {auth.user.name} {auth.user.lastname}
@@ -115,10 +115,12 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                     </HStack>
                   </MenuButton>
                   <MenuList bg={menuListBg} borderColor={menuListBorderColor} p={0}>
-                    <MenuItem py={4} gap={4}>
-                      <FontAwesomeIcon icon={faUser} />
-                      {t('general.profile')}
-                    </MenuItem>
+                    <NavLink to={getRoutePathByName('profile')}>
+                      <MenuItem py={4} gap={4}>
+                        <FontAwesomeIcon icon={faUser} />
+                        {t('general.profile')}
+                      </MenuItem>
+                    </NavLink>
                     <MenuDivider borderColor={menuListDividerBorderColor} my={0} />
                     <MenuItem py={4} gap={4} onClick={handleLogout}>
                       <FontAwesomeIcon icon={faArrowRightFromBracket} />
