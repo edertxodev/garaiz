@@ -10,15 +10,48 @@
       "message": "Escribe tu mensaje..."
     }
   },
+  "form": {
+    "button": {
+      "save": "Guardar"
+    },
+    "errors": {
+      "minLength": "Este campo requiere al menos {{number}} caracteres",
+      "required": "Este campo es obligatorio"
+    },
+    "fields": {
+      "birthdate": "Fecha de nacimiento",
+      "color": "Color",
+      "gender": "Género",
+      "lastname": "Apellidos",
+      "name": "Nombre",
+      "selectOne": "Selecciona uno..."
+    }
+  },
   "general": {
+    "colors": {
+      "blue": "Azul",
+      "green": "Verde",
+      "orange": "Naranja",
+      "pink": "Rosa",
+      "red": "Rojo",
+      "yellow": "Amarillo"
+    },
     "confirmModal": {
       "message": "¿Seguro que quieres realizar esta acción?"
     },
     "delete": "Eliminar",
+    "failed": "Ups! Algo salió mal :(",
+    "genders": {
+      "female": "Mujer",
+      "male": "Hombre",
+      "other": "Otro"
+    },
     "no": "No",
     "profile": "Perfil",
     "signIn": "Iniciar sesión",
     "signOut": "Cerrar sesión",
+    "updated": "Actualizado correctamente",
+    "updating": "Actualizando...",
     "yes": "Si"
   },
   "links": {

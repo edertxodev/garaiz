@@ -1,15 +1,19 @@
+import {
+  Enum_Userspermissionsuser_Color as ColorEnum,
+  Enum_Userspermissionsuser_Gender as GenderEnum,
+} from 'api/graphql/generated/graphql'
 import { Dispatch, SetStateAction, createContext, useContext } from 'react'
-import { Enum_Userspermissionsuser_Gender } from 'api/graphql/generated/graphql'
 
 interface User {
-  id?: string
+  id?: string | null
   username?: string
   email?: string
-  name?: string
-  lastname?: string
-  gender?: Enum_Userspermissionsuser_Gender
-  birthdate?: Date
-  avatar?: string
+  name?: string | null
+  lastname?: string | null
+  gender?: GenderEnum | null
+  birthdate?: string
+  avatar_url?: string | null
+  color?: ColorEnum
 }
 
 interface AuthContextValues {

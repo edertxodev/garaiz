@@ -44,11 +44,11 @@ const Login: FC = () => {
             })
             .then((googleProfileResponse) => {
               const user = { ...backendResponse.data.user } as User
-              user.avatar = backendResponse.data.user?.avatar_url ?? googleProfileResponse.data.picture
+              user.avatar_url = backendResponse.data.user?.avatar_url ?? googleProfileResponse.data.picture
               user.name = googleProfileResponse.data.given_name
               user.lastname = googleProfileResponse.data.family_name
               if (user.id && !backendResponse.data.user.avatar_url)
-                updateUser({ id: user.id, data: { avatar_url: user.avatar } })
+                updateUser({ id: user.id, data: { avatar_url: user.avatar_url } })
               setAuthUser(user)
               navigate(getRoutePathByName('home'))
             })

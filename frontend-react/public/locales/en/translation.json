@@ -10,15 +10,48 @@
       "message": "Write your message..."
     }
   },
+  "form": {
+    "button": {
+      "save": ""
+    },
+    "errors": {
+      "minLength": "",
+      "required": ""
+    },
+    "fields": {
+      "birthdate": "",
+      "color": "",
+      "gender": "",
+      "lastname": "",
+      "name": "",
+      "selectOne": "Select one..."
+    }
+  },
   "general": {
+    "colors": {
+      "blue": "Blue",
+      "green": "Green",
+      "orange": "Orange",
+      "pink": "Pink",
+      "red": "Red",
+      "yellow": "Yellow"
+    },
     "confirmModal": {
       "message": "Are you sure?"
     },
     "delete": "Delete",
+    "failed": "",
+    "genders": {
+      "female": "",
+      "male": "Male",
+      "other": "Other"
+    },
     "no": "No",
     "profile": "Profile",
     "signIn": "Sign in",
     "signOut": "Sign out",
+    "updated": "",
+    "updating": "",
     "yes": "Yes"
   },
   "links": {

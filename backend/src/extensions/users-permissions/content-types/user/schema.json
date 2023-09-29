@@ -74,9 +74,9 @@
     "gender": {
       "type": "enumeration",
       "enum": [
-        "MALE",
-        "FEMALE",
-        "OTHER"
+        "Male",
+        "Female",
+        "Other"
       ]
     },
     "lastname": {
@@ -90,6 +90,19 @@
       "relation": "manyToMany",
       "target": "api::conversation.conversation",
       "inversedBy": "users"
+    },
+    "color": {
+      "type": "enumeration",
+      "enum": [
+        "Blue",
+        "Pink",
+        "Green",
+        "Orange",
+        "Red",
+        "Yellow"
+      ],
+      "default": "Pink",
+      "required": true
     }
   }
 }

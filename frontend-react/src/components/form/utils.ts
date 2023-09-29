@@ -1,3 +1,4 @@
+import { FieldErrors } from 'react-hook-form'
 import DefaultRequestParams from 'api/DefaultRequestParams'
 import axios, { AxiosResponse } from 'axios'
 
@@ -5,6 +6,18 @@ interface FormError {
   key: string
   params?: any
   message?: string
+}
+
+export const handleError = (name: string, errors: FieldErrors) => {
+  const parsedErrors = JSON.parse(JSON.stringify(errors))
+  const parsedFieldName = name.split('.')[1]
+  if (parsedErrors['data'] && Object.keys(parsedErrors['data']).length > 0 && parsedErrors['data'][parsedFieldName]) {
+    return parseFormErrorMessage(parsedErrors['data'][parsedFieldName]?.message?.toString())
+  } else if (parsedErrors[name]) {
+    return parseFormErrorMessage(parsedErrors[name]?.message?.toString())
+  }
+
+  return undefined
 }
 
 // Returns translation key for Form errors

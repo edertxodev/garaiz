@@ -5,11 +5,13 @@ import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from 'lib/auth/AuthContext'
 import ChatListItem from 'components/chat/ChatListItem'
 import useConversations from 'api/graphql/hooks/Conversation/useConversations'
+import useUserColor from 'lib/hooks/useUserColor'
 
 const CreateConversationModal = lazy(() => import('components/chat/CreateConversationModal'))
 
 const ChatList: FC = () => {
   const auth = useAuth()
+  const color = useUserColor()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { data: conversations, refetch: conversationsRefetch } = useConversations({
     users: { id: { eq: auth?.user?.id } },
@@ -33,10 +35,10 @@ const ChatList: FC = () => {
           right={10}
           borderRadius="full"
           size="lg"
-          bg={useColorModeValue('pink.500', 'green.600')}
+          bg={useColorModeValue(`${color}.500`, 'green.600')}
           color="white"
           _hover={{
-            bg: useColorModeValue('pink.400', 'green.500'),
+            bg: useColorModeValue(`${color}.400`, 'green.500'),
           }}
           py={12}
           px={9}
