@@ -1,9 +1,13 @@
 import { Button, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
-import { FC, lazy, useCallback } from 'react'
+import { FC, lazy, useCallback, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
+import { getRoutePathByName } from 'lib/routes/helpers'
 import { useAuth } from 'lib/auth/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import ChatListItem from 'components/chat/ChatListItem'
+import featureState from 'lib/recoil/atoms/featureState'
 import useConversations from 'api/graphql/hooks/Conversation/useConversations'
 import useUserColor from 'lib/hooks/useUserColor'
 
@@ -16,6 +20,16 @@ const ChatList: FC = () => {
   const { data: conversations, refetch: conversationsRefetch } = useConversations({
     users: { id: { eq: auth?.user?.id } },
   })
+  const features = useRecoilValue(featureState)
+  const navigate = useNavigate()
+
+  // Return to main route if no feature available
+  useEffect(() => {
+    if (!features.chat) {
+      navigate(getRoutePathByName('home'))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [features.chat])
 
   const handleOnClose = useCallback(() => {
     onClose()

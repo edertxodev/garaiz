@@ -12,6 +12,8 @@ fragment ConversationsProps on ConversationEntityResponseCollection {
             lastname
             avatar_url
             email
+            color
+            locale
           }
         }
       }

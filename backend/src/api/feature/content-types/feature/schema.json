@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "features",
+  "info": {
+    "singularName": "feature",
+    "pluralName": "features",
+    "displayName": "feature",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "login": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {}
+    },
+    "chat": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {}
+    },
+    "name": {
+      "type": "string",
+      "pluginOptions": {}
+    }
+  }
+}

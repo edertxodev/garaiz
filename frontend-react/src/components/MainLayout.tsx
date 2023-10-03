@@ -1,13 +1,16 @@
 import { Drawer, DrawerContent, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useAuth } from 'lib/auth/AuthContext'
 import { useRoutes } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
 import { useTranslation } from 'react-i18next'
 import AppRoutes from 'lib/routes/routes'
 import Header from 'components/common/Header'
 import Sidebar from 'components/common/Sidebar'
+import featureState from 'lib/recoil/atoms/featureState'
 import useCurrentRoute from 'lib/hooks/useCurrentRoute'
+import useFeatures from 'api/graphql/hooks/Feature/useFeatures'
 
 const MainLayout: FC = () => {
   const { t } = useTranslation()
@@ -15,6 +18,13 @@ const MainLayout: FC = () => {
   const auth = useAuth()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const currentRoute = useCurrentRoute()
+  const { data: featuresResponse } = useFeatures()
+  const setFeatures = useSetRecoilState(featureState)
+
+  useEffect(() => {
+    if (featuresResponse?.attributes) setFeatures(featuresResponse?.attributes)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [featuresResponse?.attributes])
 
   return (
     <>

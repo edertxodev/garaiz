@@ -13,6 +13,8 @@ query GetConversation($id: ID) {
               name
               lastname
               avatar_url
+              color
+              locale
             }
           }
         }
