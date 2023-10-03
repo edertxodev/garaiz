@@ -179,6 +179,11 @@ export enum Enum_Userspermissionsuser_Gender {
   Other = 'Other'
 }
 
+export enum Enum_Userspermissionsuser_Locale {
+  En = 'En',
+  Es = 'Es'
+}
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -1117,6 +1122,7 @@ export type UsersPermissionsUser = {
   email: Scalars['String']['output'];
   gender?: Maybe<Enum_Userspermissionsuser_Gender>;
   lastname?: Maybe<Scalars['String']['output']>;
+  locale: Enum_Userspermissionsuser_Locale;
   name?: Maybe<Scalars['String']['output']>;
   provider?: Maybe<Scalars['String']['output']>;
   role?: Maybe<UsersPermissionsRoleEntityResponse>;
@@ -1162,6 +1168,7 @@ export type UsersPermissionsUserFiltersInput = {
   gender?: InputMaybe<StringFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   lastname?: InputMaybe<StringFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
   name?: InputMaybe<StringFilterInput>;
   not?: InputMaybe<UsersPermissionsUserFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
@@ -1184,6 +1191,7 @@ export type UsersPermissionsUserInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   gender?: InputMaybe<Enum_Userspermissionsuser_Gender>;
   lastname?: InputMaybe<Scalars['String']['input']>;
+  locale?: InputMaybe<Enum_Userspermissionsuser_Locale>;
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   provider?: InputMaybe<Scalars['String']['input']>;
@@ -1201,9 +1209,9 @@ export type ConversationsPropsFragment = { __typename?: 'ConversationEntityRespo
 
 export type PaginationPropsFragment = { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } };
 
-export type UserPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color } | null } | null };
+export type UserPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null } | null };
 
-export type UsersPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color } | null }> };
+export type UsersPropsFragment = { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> };
 
 export type CreateConversationMutationVariables = Exact<{
   data: ConversationInput;
@@ -1239,7 +1247,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color } | null } | null } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null } | null } };
 
 export type GetConversationQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -1262,14 +1270,14 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', messages?: { __typename?: 'MessageEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } }, data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color } | null } | null } | null } | null }> } | null };
+export type GetMessagesQuery = { __typename?: 'Query', messages?: { __typename?: 'MessageEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } }, data: Array<{ __typename?: 'MessageEntity', id?: string | null, attributes?: { __typename?: 'Message', content: string, timestamp: any, user?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null } | null } | null } | null }> } | null };
 
 export type GetUsersQueryVariables = Exact<{
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', usersPermissionsUsers?: { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color } | null }> } | null };
+export type GetUsersQuery = { __typename?: 'Query', usersPermissionsUsers?: { __typename?: 'UsersPermissionsUserEntityResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> } | null };
 
 export const ConversationsPropsFragmentDoc = `
     fragment ConversationsProps on ConversationEntityResponseCollection {
@@ -1316,6 +1324,7 @@ export const UserPropsFragmentDoc = `
       gender
       avatar_url
       color
+      locale
     }
   }
 }
@@ -1333,6 +1342,7 @@ export const UsersPropsFragmentDoc = `
       gender
       avatar_url
       color
+      locale
     }
   }
 }

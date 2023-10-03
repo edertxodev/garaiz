@@ -23,6 +23,7 @@
       "color": "Color",
       "gender": "Género",
       "lastname": "Apellidos",
+      "locale": "Idioma",
       "name": "Nombre",
       "selectOne": "Selecciona uno..."
     }
@@ -48,6 +49,13 @@
     },
     "no": "No",
     "profile": "Perfil",
+    "routes": {
+      "chatDetail": "Chat",
+      "chatList": "Chats",
+      "home": "Inicio",
+      "login": "Iniciar sesión",
+      "profile": "Perfil"
+    },
     "signIn": "Iniciar sesión",
     "signOut": "Cerrar sesión",
     "updated": "Actualizado correctamente",

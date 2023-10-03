@@ -18,7 +18,8 @@ import {
 } from '@chakra-ui/react'
 import { FC, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { LOCALES, LOCAL_STORAGE_KEYS } from 'lib/constants'
+import { LOCAL_STORAGE_KEYS } from 'lib/constants'
+import { Enum_Userspermissionsuser_Locale as LocaleEnum } from 'api/graphql/generated/graphql'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   faArrowRightFromBracket,
@@ -89,14 +90,14 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
 
         <HStack justify="flex-end" direction="row" spacing={2}>
           <Box display="flex" gap={1}>
-            {LOCALES.map((locale) => (
+            {(Object.keys(LocaleEnum) as Array<keyof typeof LocaleEnum>).reverse().map((locale) => (
               <Button
                 key={locale}
-                onClick={() => handleLanguageChange(locale)}
+                onClick={() => handleLanguageChange(locale.toLowerCase())}
                 variant="ghost"
-                bg={locale === i18next.resolvedLanguage ? selectedLocaleBg : 'inherit'}
+                bg={locale.toLowerCase() === i18next.resolvedLanguage ? selectedLocaleBg : 'inherit'}
               >
-                {locale}
+                {locale.toLowerCase()}
               </Button>
             ))}
           </Box>

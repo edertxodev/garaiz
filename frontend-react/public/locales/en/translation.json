@@ -48,6 +48,13 @@
     },
     "no": "No",
     "profile": "Profile",
+    "routes": {
+      "chatDetail": "Chat",
+      "chatList": "Chats",
+      "home": "Home",
+      "login": "Login",
+      "profile": "Profile"
+    },
     "signIn": "Sign in",
     "signOut": "Sign out",
     "updated": "Successfuly updated",

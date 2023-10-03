@@ -1,6 +1,7 @@
 import {
   Enum_Userspermissionsuser_Color as ColorEnum,
   Enum_Userspermissionsuser_Gender as GenderEnum,
+  Enum_Userspermissionsuser_Locale as LocaleEnum,
 } from 'api/graphql/generated/graphql'
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from 'react'
 import { Flex } from '@chakra-ui/react'
@@ -33,6 +34,15 @@ const ProfileFormFields: FC<ProfileFormFieldsProps> = ({ birthdate, setBirthdate
         value: color,
         label: t(`general.colors.${color.toLowerCase()}`),
         color: color.toLowerCase(),
+      })),
+    [t]
+  )
+
+  const localeOptions = useMemo<SelectorOption[]>(
+    () =>
+      (Object.keys(LocaleEnum) as Array<keyof typeof LocaleEnum>).map((locale) => ({
+        value: locale,
+        label: t(`general.locales.${locale.toLowerCase()}`),
       })),
     [t]
   )
@@ -71,6 +81,12 @@ const ProfileFormFields: FC<ProfileFormFieldsProps> = ({ birthdate, setBirthdate
           onChange={handleBirthdateChange}
           label={t('form.fields.birthdate')}
           placeholder={t('form.fields.birthdate')}
+        />
+        <Select
+          name="locale"
+          options={localeOptions}
+          label={t('form.fields.locale')}
+          placeholder={t('form.fields.selectOne')}
         />
       </Flex>
     </>
