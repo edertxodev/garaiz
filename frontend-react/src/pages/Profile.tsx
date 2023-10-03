@@ -2,6 +2,7 @@ import { Avatar, Box, ToastId, VStack, useToast } from '@chakra-ui/react'
 import {
   Enum_Userspermissionsuser_Color as ColorEnum,
   Enum_Userspermissionsuser_Gender as GenderEnum,
+  Enum_Userspermissionsuser_Locale as LocaleEnum,
 } from 'api/graphql/generated/graphql'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { User, useAuth } from 'lib/auth/AuthContext'
@@ -46,6 +47,7 @@ const Profile: FC = () => {
             gender: data.gender ? GenderEnum[data.gender] : undefined,
             color: data.color ? ColorEnum[data.color] : undefined,
             birthdate: data.birthdate,
+            locale: data.locale ? LocaleEnum[data.locale] : undefined,
           },
         })
           .then((response) => {
@@ -61,6 +63,7 @@ const Profile: FC = () => {
                 birthdate: returnedUser?.attributes?.birthdate,
                 avatar_url: returnedUser?.attributes?.avatar_url,
                 color: returnedUser?.attributes?.color,
+                locale: returnedUser?.attributes?.locale,
               })
             )
             if (toastRef.current)

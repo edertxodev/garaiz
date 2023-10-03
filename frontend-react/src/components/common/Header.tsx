@@ -19,6 +19,7 @@ import {
 import { FC, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
+import { Enum_Userspermissionsuser_Locale as LocaleEnum } from 'api/graphql/generated/graphql'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   faArrowRightFromBracket,
@@ -32,6 +33,7 @@ import {
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { useAuth } from 'lib/auth/AuthContext'
 import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 interface HeaderProps {
   onOpen: () => void
@@ -46,6 +48,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   const menuListBg = useColorModeValue('white', 'gray.700')
   const menuListBorderColor = useColorModeValue('white', 'gray.700')
   const menuListDividerBorderColor = useColorModeValue('gray.100', 'gray.600')
+  const selectedLocaleBg = useColorModeValue('gray.200', 'gray.700')
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.token)
@@ -53,6 +56,10 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
     auth?.setUser(undefined)
     navigate(getRoutePathByName('home'))
   }, [auth, navigate])
+
+  const handleLanguageChange = useCallback((locale: string) => {
+    i18next.changeLanguage(locale)
+  }, [])
 
   return (
     <Box bg={useColorModeValue('gray.50', 'gray.800')} position="fixed" w="100%" zIndex={1}>
@@ -82,6 +89,18 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
         </Box>
 
         <HStack justify="flex-end" direction="row" spacing={2}>
+          <Box display="flex" gap={1}>
+            {(Object.keys(LocaleEnum) as Array<keyof typeof LocaleEnum>).reverse().map((locale) => (
+              <Button
+                key={locale}
+                onClick={() => handleLanguageChange(locale.toLowerCase())}
+                variant="ghost"
+                bg={locale.toLowerCase() === i18next.resolvedLanguage ? selectedLocaleBg : 'inherit'}
+              >
+                {locale.toLowerCase()}
+              </Button>
+            ))}
+          </Box>
           <Button onClick={toggleColorMode} variant="ghost">
             {colorMode === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
           </Button>

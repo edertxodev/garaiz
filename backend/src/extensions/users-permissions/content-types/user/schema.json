@@ -103,6 +103,15 @@
       ],
       "default": "Pink",
       "required": true
+    },
+    "locale": {
+      "type": "enumeration",
+      "enum": [
+        "Es",
+        "En"
+      ],
+      "default": "Es",
+      "required": true
     }
   }
 }

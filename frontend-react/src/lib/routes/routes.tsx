@@ -22,44 +22,44 @@ const ChatList = Loadable(lazy(() => import('pages/ChatList')))
 const ChatDetail = Loadable(lazy(() => import('pages/ChatDetail')))
 
 const AppRoutes: AppRouteObject[] = [
-  { path: '/', element: <Home />, name: 'home' },
+  { name: 'home', path: '/', element: <Home /> },
   {
+    name: 'login',
     path: '/login',
     element: (
       <GuestGuard>
         <Login />
       </GuestGuard>
     ),
-    name: 'login',
   },
   {
+    name: 'profile',
     path: '/profile',
     element: (
       <AuthRoute>
         <Profile />
       </AuthRoute>
     ),
-    name: 'profile',
   },
   {
+    name: 'chatList',
     path: '/chat',
     element: (
       <AuthRoute>
         <ChatList />
       </AuthRoute>
     ),
-    name: 'chatList',
   },
   {
+    name: 'chatDetail',
     path: '/chat/:conversationId',
     element: (
       <AuthRoute>
         <ChatDetail />
       </AuthRoute>
     ),
-    name: 'chatDetail',
   },
-  { path: '*', element: <Navigate to="/" />, name: 'default' },
+  { name: 'default', path: '*', element: <Navigate to="/" /> },
 ]
 
 export default AppRoutes

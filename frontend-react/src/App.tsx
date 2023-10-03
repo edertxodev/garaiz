@@ -1,10 +1,11 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import AuthContext, { AuthContextValues, User } from 'lib/auth/AuthContext'
 import MainLayout from 'components/MainLayout'
 import crypto from 'crypto-js'
+import i18next from 'i18next'
 
 const App = () => {
   const queryCache = useMemo(() => new QueryClient(), [])
@@ -16,6 +17,10 @@ const App = () => {
   )
 
   const authContext = useMemo<AuthContextValues>(() => ({ user, setUser }), [user])
+
+  useEffect(() => {
+    i18next.changeLanguage(user?.locale?.toLowerCase())
+  }, [user?.locale])
 
   return (
     <QueryClientProvider client={queryCache}>

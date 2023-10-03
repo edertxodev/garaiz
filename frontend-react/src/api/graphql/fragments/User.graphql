@@ -10,6 +10,7 @@ fragment UserProps on UsersPermissionsUserEntityResponse {
       gender
       avatar_url
       color
+      locale
     }
   }
 }

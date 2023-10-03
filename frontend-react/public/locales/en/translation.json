@@ -12,18 +12,18 @@
   },
   "form": {
     "button": {
-      "save": ""
+      "save": "Save"
     },
     "errors": {
-      "minLength": "",
-      "required": ""
+      "minLength": "This field requires at least {{number}} characters",
+      "required": "This field is required"
     },
     "fields": {
-      "birthdate": "",
-      "color": "",
-      "gender": "",
-      "lastname": "",
-      "name": "",
+      "birthdate": "Birthdate",
+      "color": "Color",
+      "gender": "Gender",
+      "lastname": "Lastname",
+      "name": "Name",
       "selectOne": "Select one..."
     }
   },
@@ -40,18 +40,25 @@
       "message": "Are you sure?"
     },
     "delete": "Delete",
-    "failed": "",
+    "failed": "Ups! Something went wrong :(",
     "genders": {
-      "female": "",
+      "female": "Female",
       "male": "Male",
       "other": "Other"
     },
     "no": "No",
     "profile": "Profile",
+    "routes": {
+      "chatDetail": "Chat",
+      "chatList": "Chats",
+      "home": "Home",
+      "login": "Login",
+      "profile": "Profile"
+    },
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "updated": "",
-    "updating": "",
+    "updated": "Successfuly updated",
+    "updating": "Updating...",
     "yes": "Yes"
   },
   "links": {
