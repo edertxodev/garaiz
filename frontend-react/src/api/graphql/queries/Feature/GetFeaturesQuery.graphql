@@ -1,0 +1,10 @@
+query GetFeatures {
+  feature {
+    data {
+      attributes {
+        chat
+        login
+      }
+    }
+  }
+}

@@ -32,7 +32,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { useAuth } from 'lib/auth/AuthContext'
+import { useRecoilValue } from 'recoil'
 import { useTranslation } from 'react-i18next'
+import featureState from 'lib/recoil/atoms/featureState'
 import i18next from 'i18next'
 
 interface HeaderProps {
@@ -44,6 +46,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const auth = useAuth()
+  const features = useRecoilValue(featureState)
 
   const menuListBg = useColorModeValue('white', 'gray.700')
   const menuListBorderColor = useColorModeValue('white', 'gray.700')
@@ -100,11 +103,11 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                 {locale.toLowerCase()}
               </Button>
             ))}
+            <Button onClick={toggleColorMode} variant="ghost">
+              {colorMode === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+            </Button>
           </Box>
-          <Button onClick={toggleColorMode} variant="ghost">
-            {colorMode === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
-          </Button>
-          {!auth?.user ? (
+          {!auth?.user && features.login ? (
             <Button
               fontSize="sm"
               fontWeight={600}
@@ -115,17 +118,18 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
             >
               {t('general.signIn')}
             </Button>
-          ) : (
+          ) : null}
+          {auth?.user ? (
             <>
               <IconButton size="md" variant="ghost" aria-label="open menu" icon={<FontAwesomeIcon icon={faBell} />} />
               <Flex alignItems={'center'}>
                 <Menu>
                   <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
                     <HStack>
-                      <Avatar size={'sm'} src={auth.user.avatar_url ?? undefined} />
+                      <Avatar size={'sm'} src={auth?.user?.avatar_url ?? undefined} />
                       <VStack display={{ base: 'none', md: 'flex' }} alignItems="flex-start" spacing="1px" ml="2">
                         <Text fontSize="sm" fontWeight="bold">
-                          {auth.user.name} {auth.user.lastname}
+                          {auth?.user?.name} {auth?.user?.lastname}
                         </Text>
                       </VStack>
                       <Box display={{ base: 'none', md: 'flex' }}>
@@ -149,7 +153,7 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                 </Menu>
               </Flex>
             </>
-          )}
+          ) : null}
         </HStack>
       </Flex>
     </Box>

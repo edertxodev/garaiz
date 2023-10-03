@@ -9,14 +9,17 @@ import {
   sendMessage,
   subscribeToChat,
 } from 'lib/services/SocketIO'
+import { getRoutePathByName } from 'lib/routes/helpers'
 import { resolveUserCompleteName } from 'lib/resolvers/userResolvers'
 import { useAuth } from 'lib/auth/AuthContext'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import ChatDetailHeader from 'components/chat/ChatDetailHeader'
 import ChatForm from 'components/chat/ChatForm'
 import ChatMessage from 'components/chat/ChatMessage'
 import Form from 'components/form/Form'
 import Loader from 'components/common/styled/Loader'
+import featureState from 'lib/recoil/atoms/featureState'
 import moment from 'moment'
 import useConversations from 'api/graphql/hooks/Conversation/useConversations'
 import useCreateMessage from 'api/graphql/hooks/Message/useCreateMessage'
@@ -41,6 +44,16 @@ const ChatView: FC = () => {
     'id:desc',
   ])
   const { mutateAsync: createMessage } = useCreateMessage()
+  const features = useRecoilValue(featureState)
+  const navigate = useNavigate()
+
+  // Return to main route if no feature available
+  useEffect(() => {
+    if (!features.chat) {
+      navigate(getRoutePathByName('home'))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [features.chat])
 
   const loadMoreButtonBg = useColorModeValue('gray.50', 'gray.800')
   const loadMoreButtonHoverBg = useColorModeValue('gray.100', 'gray.700')

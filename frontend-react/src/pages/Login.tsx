@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading, Stack, Text, useColorModeValue } from '@chakra-ui/react'
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { GoogleIcon } from 'components/icons/GoogleIcon'
 import { LOCAL_STORAGE_KEYS } from 'lib/constants'
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
@@ -7,10 +7,12 @@ import { User, useAuth } from 'lib/auth/AuthContext'
 import { addUserToLocalStorage } from 'lib/services/Auth'
 import { getRoutePathByName } from 'lib/routes/helpers'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import { useTranslation } from 'react-i18next'
 import BlurColors from 'components/common/styled/BlurColors'
 import GithubIcon from 'components/icons/GithubIcon'
 import axios from 'axios'
+import featureState from 'lib/recoil/atoms/featureState'
 import useUpdateUser from 'api/graphql/hooks/User/useUpdateUser'
 
 const Login: FC = () => {
@@ -19,6 +21,16 @@ const Login: FC = () => {
   const { mutateAsync: updateUser } = useUpdateUser()
   const auth = useAuth()
   const appName = import.meta.env.VITE_APP_NAME
+
+  const features = useRecoilValue(featureState)
+
+  // Return to main route if no feature available
+  useEffect(() => {
+    if (!features.login) {
+      navigate(getRoutePathByName('home'))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [features.login])
 
   const setAuthUser = useCallback(
     (user: User) => {

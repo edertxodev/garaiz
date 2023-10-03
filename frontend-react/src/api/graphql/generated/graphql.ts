@@ -184,6 +184,32 @@ export enum Enum_Userspermissionsuser_Locale {
   Es = 'Es'
 }
 
+export type Feature = {
+  __typename?: 'Feature';
+  chat?: Maybe<Scalars['Boolean']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  login?: Maybe<Scalars['Boolean']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type FeatureEntity = {
+  __typename?: 'FeatureEntity';
+  attributes?: Maybe<Feature>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type FeatureEntityResponse = {
+  __typename?: 'FeatureEntityResponse';
+  data?: Maybe<FeatureEntity>;
+};
+
+export type FeatureInput = {
+  chat?: InputMaybe<Scalars['Boolean']['input']>;
+  login?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -214,7 +240,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Conversation | I18NLocale | Message | Note | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Conversation | Feature | I18NLocale | Message | Note | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -390,6 +416,7 @@ export type Mutation = {
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteConversation?: Maybe<ConversationEntityResponse>;
+  deleteFeature?: Maybe<FeatureEntityResponse>;
   deleteMessage?: Maybe<MessageEntityResponse>;
   deleteNote?: Maybe<NoteEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -410,6 +437,7 @@ export type Mutation = {
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateConversation?: Maybe<ConversationEntityResponse>;
+  updateFeature?: Maybe<FeatureEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateMessage?: Maybe<MessageEntityResponse>;
   updateNote?: Maybe<NoteEntityResponse>;
@@ -546,6 +574,11 @@ export type MutationUpdateConversationArgs = {
 };
 
 
+export type MutationUpdateFeatureArgs = {
+  data: FeatureInput;
+};
+
+
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
@@ -659,6 +692,7 @@ export type Query = {
   __typename?: 'Query';
   conversation?: Maybe<ConversationEntityResponse>;
   conversations?: Maybe<ConversationEntityResponseCollection>;
+  feature?: Maybe<FeatureEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
@@ -1205,7 +1239,7 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> };
+export type ConversationsPropsFragment = { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> } | null } | null }> };
 
 export type PaginationPropsFragment = { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } };
 
@@ -1254,14 +1288,19 @@ export type GetConversationQueryVariables = Exact<{
 }>;
 
 
-export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, avatar_url?: string | null } | null }> } | null } | null } | null } | null };
+export type GetConversationQuery = { __typename?: 'Query', conversation?: { __typename?: 'ConversationEntityResponse', data?: { __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, email: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> } | null } | null } | null } | null };
 
 export type GetConversationsQueryVariables = Exact<{
   filters?: InputMaybe<ConversationFiltersInput>;
 }>;
 
 
-export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string } | null }> } | null } | null }> } | null };
+export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> } | null } | null }> } | null };
+
+export type GetFeaturesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFeaturesQuery = { __typename?: 'Query', feature?: { __typename?: 'FeatureEntityResponse', data?: { __typename?: 'FeatureEntity', attributes?: { __typename?: 'Feature', chat?: boolean | null, login?: boolean | null } | null } | null } | null };
 
 export type GetMessagesQueryVariables = Exact<{
   filters?: InputMaybe<MessageFiltersInput>;
@@ -1294,6 +1333,8 @@ export const ConversationsPropsFragmentDoc = `
             lastname
             avatar_url
             email
+            color
+            locale
           }
         }
       }
@@ -1474,6 +1515,8 @@ export const GetConversationDocument = `
               name
               lastname
               avatar_url
+              color
+              locale
             }
           }
         }
@@ -1515,6 +1558,32 @@ export const useGetConversationsQuery = <
     useQuery<GetConversationsQuery, TError, TData>(
       variables === undefined ? ['GetConversations'] : ['GetConversations', variables],
       fetcher<GetConversationsQuery, GetConversationsQueryVariables>(client, GetConversationsDocument, variables, headers),
+      options
+    );
+export const GetFeaturesDocument = `
+    query GetFeatures {
+  feature {
+    data {
+      attributes {
+        chat
+        login
+      }
+    }
+  }
+}
+    `;
+export const useGetFeaturesQuery = <
+      TData = GetFeaturesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetFeaturesQueryVariables,
+      options?: UseQueryOptions<GetFeaturesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeaturesQuery, TError, TData>(
+      variables === undefined ? ['GetFeatures'] : ['GetFeatures', variables],
+      fetcher<GetFeaturesQuery, GetFeaturesQueryVariables>(client, GetFeaturesDocument, variables, headers),
       options
     );
 export const GetMessagesDocument = `
