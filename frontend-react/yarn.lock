@@ -1610,6 +1610,21 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.4.tgz#19654d1026cc410975d46445180e70a5089b3e7d"
   integrity sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==
 
+"@fontsource/dm-serif-display@^5.0.14":
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/dm-serif-display/-/dm-serif-display-5.0.14.tgz#cba1c2d478955b5750b873480a6a12ad53dbf857"
+  integrity sha512-8XYGsZj4z1ri61eeNFbQX8VzZGKiWmUHy5OBJ6HHGS8vBzi981zjdpVTAYhDdXPB1GgSG3cS/q92ill8+Zk6Zw==
+
+"@fontsource/fuggles@^5.0.14":
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/fuggles/-/fuggles-5.0.14.tgz#05e876ba9f50888587d0b463ec228cd40db71049"
+  integrity sha512-AimkQbL3U7rUr4bQXcCcRMK2cnuFD1ud+J7o7UqWFyGmcjMktEexzj9eaOhPdE+2AwPE1G4ZFDAfpmgZOdrgyw==
+
+"@fontsource/roboto-condensed@^5.0.8":
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto-condensed/-/roboto-condensed-5.0.8.tgz#6c509a1df416f5c8e05901a77f8d1207cf08f555"
+  integrity sha512-xAXYY+ys24OZ/eOfXJZILPu2xOB7c0ZruM4cd4TSzX3WGj4dZbXYwCEowLldKbZye6LTqiltpFLP/g/Ne0qGLg==
+
 "@fortawesome/fontawesome-common-types@6.4.2":
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.2.tgz#1766039cad33f8ad87f9467b98e0d18fbc8f01c5"
@@ -1619,6 +1634,13 @@
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.2.tgz#37f4507d5ec645c8b50df6db14eced32a6f9be09"
   integrity sha512-gjYDSKv3TrM2sLTOKBc5rH9ckje8Wrwgx1CxAPbN5N3Fm4prfi7NsJVWd1jklp7i5uSCVwhZS5qlhMXqLrpAIg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.2"
+
+"@fortawesome/free-brands-svg-icons@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.4.2.tgz#9b8e78066ea6dd563da5dfa686615791d0f7cc71"
+  integrity sha512-LKOwJX0I7+mR/cvvf6qIiqcERbdnY+24zgpUSouySml+5w8B4BJOx8EhDR/FTKAu06W12fmUIcv6lzPSwYKGGg==
   dependencies:
     "@fortawesome/fontawesome-common-types" "6.4.2"
 

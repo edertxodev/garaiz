@@ -240,7 +240,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Conversation | Feature | I18NLocale | Message | Note | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Conversation | Feature | I18NLocale | Message | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -408,7 +408,6 @@ export type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createConversation?: Maybe<ConversationEntityResponse>;
   createMessage?: Maybe<MessageEntityResponse>;
-  createNote?: Maybe<NoteEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -418,7 +417,6 @@ export type Mutation = {
   deleteConversation?: Maybe<ConversationEntityResponse>;
   deleteFeature?: Maybe<FeatureEntityResponse>;
   deleteMessage?: Maybe<MessageEntityResponse>;
-  deleteNote?: Maybe<NoteEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -440,7 +438,6 @@ export type Mutation = {
   updateFeature?: Maybe<FeatureEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateMessage?: Maybe<MessageEntityResponse>;
-  updateNote?: Maybe<NoteEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -465,11 +462,6 @@ export type MutationCreateConversationArgs = {
 
 export type MutationCreateMessageArgs = {
   data: MessageInput;
-};
-
-
-export type MutationCreateNoteArgs = {
-  data: NoteInput;
 };
 
 
@@ -499,11 +491,6 @@ export type MutationDeleteConversationArgs = {
 
 
 export type MutationDeleteMessageArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationDeleteNoteArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -591,12 +578,6 @@ export type MutationUpdateMessageArgs = {
 };
 
 
-export type MutationUpdateNoteArgs = {
-  data: NoteInput;
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
@@ -629,50 +610,6 @@ export type MutationUploadArgs = {
   refId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Note = {
-  __typename?: 'Note';
-  content?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  title: Scalars['String']['output'];
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  user?: Maybe<UsersPermissionsUserEntityResponse>;
-};
-
-export type NoteEntity = {
-  __typename?: 'NoteEntity';
-  attributes?: Maybe<Note>;
-  id?: Maybe<Scalars['ID']['output']>;
-};
-
-export type NoteEntityResponse = {
-  __typename?: 'NoteEntityResponse';
-  data?: Maybe<NoteEntity>;
-};
-
-export type NoteEntityResponseCollection = {
-  __typename?: 'NoteEntityResponseCollection';
-  data: Array<NoteEntity>;
-  meta: ResponseCollectionMeta;
-};
-
-export type NoteFiltersInput = {
-  and?: InputMaybe<Array<InputMaybe<NoteFiltersInput>>>;
-  content?: InputMaybe<StringFilterInput>;
-  createdAt?: InputMaybe<DateTimeFilterInput>;
-  id?: InputMaybe<IdFilterInput>;
-  not?: InputMaybe<NoteFiltersInput>;
-  or?: InputMaybe<Array<InputMaybe<NoteFiltersInput>>>;
-  title?: InputMaybe<StringFilterInput>;
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
-  user?: InputMaybe<UsersPermissionsUserFiltersInput>;
-};
-
-export type NoteInput = {
-  content?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<Scalars['ID']['input']>;
-};
-
 export type Pagination = {
   __typename?: 'Pagination';
   page: Scalars['Int']['output'];
@@ -698,8 +635,6 @@ export type Query = {
   me?: Maybe<UsersPermissionsMe>;
   message?: Maybe<MessageEntityResponse>;
   messages?: Maybe<MessageEntityResponseCollection>;
-  note?: Maybe<NoteEntityResponse>;
-  notes?: Maybe<NoteEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -742,18 +677,6 @@ export type QueryMessageArgs = {
 
 export type QueryMessagesArgs = {
   filters?: InputMaybe<MessageFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type QueryNoteArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryNotesArgs = {
-  filters?: InputMaybe<NoteFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };

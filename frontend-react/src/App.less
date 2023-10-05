@@ -1,0 +1,28 @@
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+[data-theme='light'] {
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--chakra-colors-orange-100);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--chakra-colors-orange-300);
+  }
+}
+
+[data-theme='dark'] {
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--chakra-colors-gray-800);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--chakra-colors-gray-400);
+  }
+}

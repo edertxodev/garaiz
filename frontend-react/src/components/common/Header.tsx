@@ -6,6 +6,7 @@ import {
   HStack,
   Heading,
   IconButton,
+  Link,
   Menu,
   MenuButton,
   MenuDivider,
@@ -18,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { FC, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { LOCAL_STORAGE_KEYS } from 'lib/constants'
+import { LINK_ITEMS, LOCAL_STORAGE_KEYS } from 'lib/constants'
 import { Enum_Userspermissionsuser_Locale as LocaleEnum } from 'api/graphql/generated/graphql'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
@@ -48,10 +49,13 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   const auth = useAuth()
   const features = useRecoilValue(featureState)
 
+  const headerBgGradient =
+    colorMode === 'light' ? 'linear(to-r, red.100, orange.100)' : 'linear(to-r, gray.800, gray.600)'
   const menuListBg = useColorModeValue('white', 'gray.700')
   const menuListBorderColor = useColorModeValue('white', 'gray.700')
   const menuListDividerBorderColor = useColorModeValue('gray.100', 'gray.600')
-  const selectedLocaleBg = useColorModeValue('gray.200', 'gray.700')
+  const hoverButtonBg = useColorModeValue('orange.200', 'gray.700')
+  const linkHoverColor = useColorModeValue('orange.400', 'gray.400')
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.token)
@@ -65,17 +69,8 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
   }, [])
 
   return (
-    <Box bg={useColorModeValue('gray.50', 'gray.800')} position="fixed" w="100%" zIndex={1}>
-      <Flex
-        color={useColorModeValue('gray.600', 'white')}
-        h={16}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.700')}
-        alignItems="center"
-        justifyContent="space-between"
-        px={4}
-      >
+    <Box bgGradient={headerBgGradient} position="fixed" w="100%" zIndex={1}>
+      <Flex h={28} alignItems="center" justifyContent="space-between" px={{ base: 2, md: 4 }}>
         <IconButton
           display={{ base: 'flex', md: 'none' }}
           border="none"
@@ -85,9 +80,35 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
         >
           <FontAwesomeIcon icon={faBars} />
         </IconButton>
-        <Box>
+
+        <HStack display={{ base: 'none', md: 'flex' }}>
+          {LINK_ITEMS.map((linkItem) => (
+            <Link
+              key={linkItem.name}
+              as={NavLink}
+              to={linkItem.path}
+              fontWeight="bold"
+              transition="all ease 0.5s"
+              _hover={{
+                color: linkHoverColor,
+                textDecoration: 'underline',
+                textUnderlineOffset: 6,
+              }}
+              fontSize="xl"
+            >
+              {t(`links.${linkItem.name}`)}
+            </Link>
+          ))}
+        </HStack>
+
+        <Box flex={1}>
           <NavLink to={getRoutePathByName('home')}>
-            <Heading>{import.meta.env.VITE_APP_NAME}</Heading>
+            <Heading fontWeight="light" textAlign="center">
+              MAIDER FERREIRA
+              <Text as="span" fontFamily="altHeading" transform="rotate(-18deg)" position="absolute" mt={5} ml={-10}>
+                Makeup
+              </Text>
+            </Heading>
           </NavLink>
         </Box>
 
@@ -98,12 +119,14 @@ const Header: FC<HeaderProps> = ({ onOpen }) => {
                 key={locale}
                 onClick={() => handleLanguageChange(locale.toLowerCase())}
                 variant="ghost"
-                bg={locale.toLowerCase() === i18next.resolvedLanguage ? selectedLocaleBg : 'inherit'}
+                bg={locale.toLowerCase() === i18next.resolvedLanguage ? hoverButtonBg : 'inherit'}
+                _hover={{ bg: hoverButtonBg }}
+                display={{ base: 'none', md: 'flex' }}
               >
                 {locale.toLowerCase()}
               </Button>
             ))}
-            <Button onClick={toggleColorMode} variant="ghost">
+            <Button onClick={toggleColorMode} variant="ghost" _hover={{ bg: hoverButtonBg }}>
               {colorMode === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
             </Button>
           </Box>
