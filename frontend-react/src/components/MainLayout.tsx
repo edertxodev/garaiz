@@ -6,7 +6,6 @@ import { useRoutes } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { useTranslation } from 'react-i18next'
 import AppRoutes from 'lib/routes/routes'
-import Footer from 'components/common/Footer'
 import Header from 'components/common/Header'
 import Sidebar from 'components/common/Sidebar'
 import featureState from 'lib/recoil/atoms/featureState'
@@ -32,23 +31,7 @@ const MainLayout: FC = () => {
       <Helmet titleTemplate={`${import.meta.env.VITE_APP_NAME} | %s`}>
         <title>{t(`general.routes.${currentRoute?.name}`)}</title>
       </Helmet>
-      <Flex
-        minHeight="100vh"
-        bg={useColorModeValue('orange.100', 'gray.800')}
-        direction="column"
-        css={{
-          '&::-webkit-scrollbar': {
-            width: '4px',
-          },
-          '&::-webkit-scrollbar-track': {
-            width: '6px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: 'red.300',
-            borderRadius: '24px',
-          },
-        }}
-      >
+      <Flex minHeight="100vh">
         {auth?.user ? <Sidebar onClose={onClose} display={{ base: 'none', md: 'block' }} /> : null}
         <Drawer
           isOpen={isOpen}
@@ -65,15 +48,14 @@ const MainLayout: FC = () => {
         <Header onOpen={onOpen} />
         <Flex
           pl={{ base: 0, md: auth?.user ? 72 : 0 }}
-          pt={32}
-          px={{ base: 2, md: 4 }}
+          pt={16}
           display="flex"
           width="100%"
-          minHeight="100vh"
+          height="100vh"
+          bg={useColorModeValue('gray.50', 'gray.800')}
         >
           {content}
         </Flex>
-        <Footer />
       </Flex>
     </>
   )

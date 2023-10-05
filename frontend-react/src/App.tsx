@@ -7,9 +7,6 @@ import AuthContext, { AuthContextValues, User } from 'lib/auth/AuthContext'
 import MainLayout from 'components/MainLayout'
 import crypto from 'crypto-js'
 import i18next from 'i18next'
-import theme from 'lib/theme'
-
-import './App.less'
 
 const App = () => {
   const queryCache = useMemo(() => new QueryClient(), [])
@@ -27,7 +24,7 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryCache}>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
         <AuthContext.Provider value={authContext}>
           <RecoilRoot>
             <MainLayout />
