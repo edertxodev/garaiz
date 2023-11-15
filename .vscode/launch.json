@@ -7,9 +7,16 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}/frontend-react/src"
+      "name": "NextJS Chrome",
+      "url": "http://localhost:3001",
+      "webRoot": "${workspaceFolder}/frontend-next/src"
     }
+    // {
+    //   "type": "chrome",
+    //   "request": "launch",
+    //   "name": "Launch Chrome against localhost",
+    //   "url": "http://localhost:5173",
+    //   "webRoot": "${workspaceFolder}/frontend-react/src"
+    // }
   ]
 }
