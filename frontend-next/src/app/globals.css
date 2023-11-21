@@ -2,26 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer utilities {
+  /* General */
+  .bg-primary {
+    @apply bg-gradient-to-t from-gray-200 to-gray-100 dark:from-blue-900 dark:to-blue-800;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  .bg-secondary {
+    @apply bg-blue-900 dark:bg-white;
+  }
+
+  .color-primary {
+    @apply text-gray-900 dark:text-white;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  /* Buttons */
+  .custom-btn {
+    @apply rounded-md py-4 px-8 text-base font-semibold text-white duration-300 ease-in-out shadow mb-6;
+  }
+
+  .custom-btn--action {
+    @apply custom-btn bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600;
+  }
+
+  .custom-btn--outline {
+    @apply custom-btn color-primary hover:bg-gray-300 dark:hover:text-gray-300 dark:hover:bg-white/5 border border-gray-900 dark:border-white;
+  }
+
+  .custom-btn--link {
+    @apply custom-btn color-primary hover:text-gray-600 dark:hover:text-gray-300;
+  }
+
+  .custom-btn--primary {
+    @apply custom-btn bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600;
+  }
+
+  /* Cards */
+  .card {
+    @apply rounded-md shadow bg-white dark:bg-indigo-700 p-8;
+  }
+
+  /* Form elements */
+  .input {
+    @apply w-full rounded-md border border-transparent py-3 px-6 text-base bg-gray-200 dark:bg-indigo-800 outline-none;
+  }
+
+  /* Body link */
+  .body-link {
+    @apply font-bold hover:underline;
+  }
 }

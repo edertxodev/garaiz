@@ -1,5 +1,5 @@
 import { Query, QueryNotesArgs } from '@/lib/graphql/generated'
-import { client } from '@/lib/graphql/client'
+import { getClient } from '@/lib/graphql/client'
 import { gql } from 'graphql-request'
 
 export async function getAllNotes(variables: QueryNotesArgs) {
@@ -15,7 +15,7 @@ export async function getAllNotes(variables: QueryNotesArgs) {
       }
     }
   `
-  const response = await client.request<Query, QueryNotesArgs>(query, variables)
+  const response = await getClient().request<Query, QueryNotesArgs>(query, variables)
 
   return response.notes
 }
