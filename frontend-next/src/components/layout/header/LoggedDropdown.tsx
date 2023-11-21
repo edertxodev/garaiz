@@ -1,67 +1,50 @@
-import { useCallback, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { getRouteByName } from '@/lib/routes'
+import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import clsx from 'clsx'
+import Link from 'next/link'
 
 export default function LoggedDropdown() {
   const { data: sessionData } = useSession()
-  const [opened, setOpened] = useState<boolean>(false)
-
-  const handleDropdownOpen = useCallback(() => {
-    setOpened(!opened)
-  }, [opened])
 
   return (
-    <div className="relative inline-block text-left">
-      <Image
-        src={sessionData?.user?.image ?? ''}
-        alt="Profile picture"
-        width={48}
-        height={48}
-        className="rounded-full shadow-md hover:cursor-pointer"
-        onClick={handleDropdownOpen}
-      />
-
-      <div
-        className={clsx(
-          `absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`,
-          { hidden: !opened, block: opened }
-        )}
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="menu-button"
-        tabIndex={-1}
-      >
-        <div className="py-1" role="none">
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-0">
-            Edit
-          </a>
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-1">
-            Duplicate
-          </a>
-        </div>
-        <div className="py-1" role="none">
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-2">
-            Archive
-          </a>
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-3">
-            Move
-          </a>
-        </div>
-        <div className="py-1" role="none">
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-4">
-            Share
-          </a>
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-5">
-            Add to favorites
-          </a>
-        </div>
-        <div className="py-1" role="none">
-          <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex={-1} id="menu-item-6">
-            Delete
-          </a>
-        </div>
-      </div>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Image
+          src={sessionData?.user?.image ?? ''}
+          alt="Profile picture"
+          width={42}
+          height={42}
+          className="rounded-full shadow-md hover:cursor-pointer"
+        />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="mr-4">
+        <DropdownMenuLabel>{sessionData?.user?.name}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <Link href="/">
+            <DropdownMenuItem>
+              <FontAwesomeIcon icon={faUser} className="mr-2" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: getRouteByName('login').path })}>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} className="mr-2" />
+          <span>Log out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

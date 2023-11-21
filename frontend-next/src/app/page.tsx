@@ -1,9 +1,10 @@
-import { ActionLinkButton, OutlineLinkButton } from '@/components/buttons'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default async function HomePage() {
   return (
     <>
-      <div className="relative isolate px-6 pt-14 lg:px-8">
+      <div className="relative isolate px-6 pt-14 lg:px-8 h-[8000px]">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-200">
@@ -14,8 +15,12 @@ export default async function HomePage() {
               fugiat veniam occaecat fugiat aliqua.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <ActionLinkButton href="/">Get started</ActionLinkButton>
-              <OutlineLinkButton href="/">Learn more</OutlineLinkButton>
+              <Button variant="default" asChild>
+                <Link href="/">Get started</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/">Learn more</Link>
+              </Button>
             </div>
           </div>
         </div>

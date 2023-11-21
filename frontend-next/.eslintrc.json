@@ -1,7 +1,8 @@
 {
   "extends": "next/core-web-vitals",
-  "plugins": ["sort-imports-es6-autofix"],
+  "plugins": ["sort-imports-es6-autofix", "unused-imports"],
   "rules": {
-    "sort-imports-es6-autofix/sort-imports-es6": 2
+    "sort-imports-es6-autofix/sort-imports-es6": 2,
+    "unused-imports/no-unused-imports": "error"
   }
 }

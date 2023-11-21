@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /* General */
+/* @layer utilities {
   .bg-primary {
     @apply bg-gradient-to-t from-gray-200 to-gray-100 dark:from-blue-900 dark:to-blue-800;
   }
@@ -18,7 +17,6 @@
 }
 
 @layer components {
-  /* Buttons */
   .custom-btn {
     @apply rounded-md py-4 px-8 text-base font-semibold text-white duration-300 ease-in-out shadow mb-6;
   }
@@ -39,18 +37,44 @@
     @apply custom-btn bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600;
   }
 
-  /* Cards */
   .card {
     @apply rounded-md shadow bg-white dark:bg-indigo-700 p-8;
   }
 
-  /* Form elements */
   .input {
     @apply w-full rounded-md border border-transparent py-3 px-6 text-base bg-gray-200 dark:bg-indigo-800 outline-none;
   }
 
-  /* Body link */
   .body-link {
     @apply font-bold hover:underline;
   }
+} */
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-200;
+}
+
+.dark ::-webkit-scrollbar-track {
+  @apply bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-slate-400;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-slate-600;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
 }

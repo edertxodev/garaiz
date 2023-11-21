@@ -1,58 +1,60 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { getRouteByName, routes } from '@/lib/routes'
-import { roboto } from '@/lib/fonts'
-import HeaderLink from '@/components/layout/header/HeaderLink'
-import clsx from 'clsx'
+import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { routes } from '@/lib/routes'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
+import LoggedDropdown from '@/components/layout/header/LoggedDropdown'
+import ThemeToggle from '@/components/layout/header/ThemeToggle'
 
-type SidevarProps = {
-  opened: boolean
-  setOpened: () => void
-}
+export default function Sidevar() {
+  const { data: sessionData, status: sessionStatus } = useSession()
 
-export default function Sidevar({ opened, setOpened }: SidevarProps) {
   return (
-    <div className="lg:hidden" role="dialog" aria-modal="true">
-      <div
-        className={clsx(
-          'fixed shadow-md inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gradient-to-t from-gray-200 to-white dark:from-blue-950 dark:to-blue-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10',
-          { hidden: !opened }
-        )}
-      >
-        <div className="flex items-center justify-between md:justify-end border-b border-b-blue-400/10 pb-4">
-          <HeaderLink href="/" className="-m-1.5 p-1.5 md:hidden">
-            <span className={`${roboto.className} text-4xl`}>Garaiz</span>
-          </HeaderLink>
-          <button type="button" className="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-white" onClick={setOpened}>
-            <FontAwesomeIcon icon={faXmark} size="xl" />
-          </button>
-        </div>
-        <div className="mt-6 flow-root">
-          <div className="-my-6 divide-y divide-gray-500/10 dark:divide-blue-400/10">
-            <div className="space-y-2 py-6">
-              {routes.map((route) =>
-                route.name !== 'home' ? (
-                  <HeaderLink
-                    key={route.name}
-                    href={route.path}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    {route.name}
-                  </HeaderLink>
-                ) : null
-              )}
-            </div>
-            <div className="py-6">
-              <a
-                href={getRouteByName('login').path}
-                className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+    <Sheet>
+      <SheetTrigger className="flex lg:hidden" asChild>
+        <Button variant="ghost">
+          <FontAwesomeIcon icon={faBars} size="xl" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col min-h-screen">
+        <SheetHeader className="!block !text-left">
+          <ThemeToggle />
+        </SheetHeader>
+        <div className="flex flex-col">
+          {routes.map((route) =>
+            !['login'].includes(route.name) ? (
+              <Link
+                key={route.name}
+                href={route.path}
+                className="py-4 px-2 hover:bg-slate-100/80 hover:dark:bg-slate-800 rounded-lg"
               >
-                Log in
-              </a>
-            </div>
-          </div>
+                {route.name}
+              </Link>
+            ) : null
+          )}
         </div>
-      </div>
-    </div>
+
+        <SheetFooter className="mt-auto !flex-col">
+          <Separator className="mb-8" />
+          <div className="flex">
+            {sessionStatus === 'authenticated' ? (
+              <>
+                <LoggedDropdown />
+                <span className="ml-4 mt-2">Hi {sessionData.user?.name?.split(' ')?.[0]}!</span>
+              </>
+            ) : (
+              <Button variant="secondary" width="full">
+                Log in
+              </Button>
+            )}
+          </div>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   )
 }

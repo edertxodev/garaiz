@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.className} antialiased h-screen bg-primary`}>
+      <body className={`${roboto.className} antialiased h-screen bg-white dark:bg-slate-900`}>
         <Providers>
           <Header />
           {children}

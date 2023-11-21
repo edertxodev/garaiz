@@ -6,7 +6,6 @@ type Route = {
 export const routes: Route[] = [
   { name: 'home', path: '/' },
   { name: 'login', path: '/auth/login' },
-  { name: 'signup', path: '/auth/signup' },
   { name: 'product', path: '/product' },
   { name: 'features', path: '/features' },
   { name: 'marketplace', path: '/marketplace' },
