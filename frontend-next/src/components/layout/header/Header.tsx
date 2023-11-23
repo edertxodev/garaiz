@@ -12,7 +12,6 @@ import { getRouteByName, routes } from '@/lib/routes'
 import { roboto } from '@/lib/fonts'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import HeaderLink from '@/components/layout/header/HeaderLink'
 import Link from 'next/link'
 import LoggedDropdown from '@/components/layout/header/LoggedDropdown'
 import Sidevar from '@/components/layout/header/Sidevar'
@@ -33,15 +32,15 @@ export default function Header() {
     <header className={clsx('fixed inset-x-0 top-0 z-50', { 'shadow bg-white/80 dark:bg-slate-950/80': !!scrolled })}>
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <HeaderLink href={getRouteByName('home').path} className="-m-1.5 p-1.5">
-            <span className={`${roboto.className} text-4xl`}>Garaiz</span>
-          </HeaderLink>
+          <Link href={getRouteByName('home').path} className="-m-1.5 p-1.5">
+            <span className={`${roboto.className} text-4xl font-bold`}>Garaiz</span>
+          </Link>
         </div>
         <Sidevar />
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             {routes.map((route) =>
-              !['home', 'login'].includes(route.name) ? (
+              !['home', 'login', 'profile'].includes(route.name) ? (
                 <NavigationMenuItem key={route.name}>
                   <Link href={route.path} legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>{route.name}</NavigationMenuLink>

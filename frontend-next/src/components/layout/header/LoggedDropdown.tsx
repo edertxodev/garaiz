@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { getFullName } from '@/lib/utils'
 import { getRouteByName } from '@/lib/routes'
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -21,7 +22,7 @@ export default function LoggedDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Image
-          src={sessionData?.user?.image ?? ''}
+          src={sessionData?.internalUser?.avatar_url ?? sessionData?.user?.image ?? ''}
           alt="Profile picture"
           width={42}
           height={42}
@@ -29,10 +30,10 @@ export default function LoggedDropdown() {
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-4">
-        <DropdownMenuLabel>{sessionData?.user?.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>{getFullName(sessionData?.internalUser) ?? sessionData?.user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/">
+          <Link href={getRouteByName('profile').path}>
             <DropdownMenuItem>
               <FontAwesomeIcon icon={faUser} className="mr-2" />
               <span>Profile</span>

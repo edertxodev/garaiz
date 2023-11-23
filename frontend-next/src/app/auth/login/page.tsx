@@ -1,18 +1,15 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Metadata } from 'next'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { getRouteByName } from '@/lib/routes'
-import { signIn } from 'next-auth/react'
-import { useCallback } from 'react'
+import { handleGoogleSignIn } from '@/app/auth/login/actions'
+
+export const metadata: Metadata = {
+  title: 'Login',
+}
 
 export default function LoginPage() {
-  const handleGoogleSignIn = useCallback(() => {
-    signIn('google', { callbackUrl: getRouteByName('home').path })
-  }, [])
-
   return (
     <>
       <CardHeader>

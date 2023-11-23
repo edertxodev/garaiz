@@ -1236,6 +1236,14 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  data: UsersPermissionsUserInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', name?: string | null } | null } | null } };
+
 export type GetAllNotesQueryVariables = Exact<{
   filters?: InputMaybe<NoteFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
@@ -1244,3 +1252,10 @@ export type GetAllNotesQueryVariables = Exact<{
 
 
 export type GetAllNotesQuery = { __typename?: 'Query', notes?: { __typename?: 'NoteEntityResponseCollection', data: Array<{ __typename?: 'NoteEntity', id?: string | null, attributes?: { __typename?: 'Note', title: string } | null }> } | null };
+
+export type GetUserQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', usersPermissionsUser?: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', name?: string | null, lastname?: string | null, birthdate?: any | null, gender?: Enum_Userspermissionsuser_Gender | null, avatar_url?: string | null, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null } | null } | null };

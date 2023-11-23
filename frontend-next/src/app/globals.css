@@ -78,3 +78,8 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-slate-400;
 }
+
+/* React Day Picker */
+.rdp-vhidden {
+  @apply hidden;
+}

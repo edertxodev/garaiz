@@ -27,7 +27,7 @@ export default function Sidevar() {
         </SheetHeader>
         <div className="flex flex-col">
           {routes.map((route) =>
-            !['login'].includes(route.name) ? (
+            !['login', 'profile'].includes(route.name) ? (
               <Link
                 key={route.name}
                 href={route.path}
