@@ -7,6 +7,7 @@ export const routes: Route[] = [
   { name: 'home', path: '/' },
   { name: 'login', path: '/auth/login' },
   { name: 'profile', path: '/user/profile' },
+  { name: 'chat', path: '/user/chat' },
   { name: 'product', path: '/product' },
   { name: 'features', path: '/features' },
   { name: 'marketplace', path: '/marketplace' },

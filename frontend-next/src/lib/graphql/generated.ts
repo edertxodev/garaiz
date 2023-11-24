@@ -1242,7 +1242,14 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', name?: string | null } | null } | null } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUsersPermissionsUser: { __typename?: 'UsersPermissionsUserEntityResponse', data?: { __typename?: 'UsersPermissionsUserEntity', id?: string | null } | null } };
+
+export type GetConversationsQueryVariables = Exact<{
+  filters?: InputMaybe<ConversationFiltersInput>;
+}>;
+
+
+export type GetConversationsQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationEntityResponseCollection', data: Array<{ __typename?: 'ConversationEntity', id?: string | null, attributes?: { __typename?: 'Conversation', uuid?: string | null, users?: { __typename?: 'UsersPermissionsUserRelationResponseCollection', data: Array<{ __typename?: 'UsersPermissionsUserEntity', id?: string | null, attributes?: { __typename?: 'UsersPermissionsUser', username: string, name?: string | null, lastname?: string | null, avatar_url?: string | null, email: string, color: Enum_Userspermissionsuser_Color, locale: Enum_Userspermissionsuser_Locale } | null }> } | null } | null }> } | null };
 
 export type GetAllNotesQueryVariables = Exact<{
   filters?: InputMaybe<NoteFiltersInput>;

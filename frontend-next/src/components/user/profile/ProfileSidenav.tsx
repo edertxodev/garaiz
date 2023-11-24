@@ -15,7 +15,6 @@ type ProfileSidenavProps = {
 
 export default function ProfileSidenav({ className, items, ...props }: ProfileSidenavProps) {
   const pathname = usePathname()
-  console.log('kaixooo', pathname === items[0].href)
 
   return (
     <nav className={cn('flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1', className)} {...props}>

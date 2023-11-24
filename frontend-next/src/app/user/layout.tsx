@@ -3,7 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { PropsWithChildren } from 'react'
 import { getRouteByName } from '@/lib/routes'
-import ProfileSidenav, { ProfileSidenavItem } from '@/components/profile/ProfileSidenav'
+import ProfileSidenav, { ProfileSidenavItem } from '@/components/user/profile/ProfileSidenav'
 
 const sidebarNavItems: ProfileSidenavItem[] = [
   {
